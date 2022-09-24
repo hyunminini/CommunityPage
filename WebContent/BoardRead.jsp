@@ -7,6 +7,6 @@
 <title>BoardRead.jsp</title>
 </head>
 <body>
-
+test
 </body>
 </html>
