@@ -2,6 +2,7 @@ package board;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,13 +25,14 @@ public class BoardController extends HttpServlet {
 		HttpSession sesstion = request.getSession();
 		
 		Integer empno = (Integer) sesstion.getAttribute("empno"); 
-		System.out.println("command" + command);
+		System.out.println("command " + command);
 		
 		if(command == null){
 			command = "main";
 		}		
 		
 		if(command.equals("main")){
+			
 			Main(request, response);
 		}else if(command.equals("write")){
 			write(request, response);
@@ -46,34 +48,37 @@ public class BoardController extends HttpServlet {
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");	
 		String category=request.getParameter("category");
-		int empno= Integer.parseInt(request.getParameter("empno"));
-		String pw=request.getParameter("pw");
+		Integer empno= Integer.parseInt(request.getParameter("empno"));
+//		String pw=request.getParameter("pw");
 		
-		System.out.println(empno);
+//		System.out.println("writempno:"+empno);
 		
 		request.setAttribute("empno", empno);
-		request.setAttribute("pw", pw);
+//		request.setAttribute("pw", pw);
 		
 		//데이터값 입력 유무만 유효성 검증
 		// database에서 해당 값들은 not null로 지저해주었기 때문에
 		// 해당 값들이 null값이면 재입력할 수 있도록 write.html로 Redirect함
+		
+		// 입력이 완료되었는지에 대한 결과를 의미
+		boolean result = false ;
+		
 		if(title == null || title.trim().length() == 0 ||
 		content == null || content.trim().length() == 0 ||
-		category == null || category.trim().length() == 0 || 
-//		empno == null || empno.trim().length() == 0 ||
-		pw == null || pw.trim().length() == 0 ){
-			
+		category == null || category.trim().length() == 0)
+//		empno == null || empno.trimToSize() == 0 
+//		pw == null || pw.trim().length() == 0 )
+		{
 			response.sendRedirect("BoardWrite.jsp?empno="+empno);
 			return;//write() 메소드 종료
 		}
 		
-		// 입력이 완료되었는지에 대한 결과를 의미
-		boolean result = false;
 		
 		// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
 		// DAO에 넘겨준다!
 		try {
-			result = BoardDAO.writeContent(new BoardDTO(title, content, category, empno, pw));
+			result = BoardDAO.writeContent(new BoardDTO(title, empno, category, content));
+			request.setAttribute("Main", BoardDAO.getAllContents());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
@@ -82,8 +87,9 @@ public class BoardController extends HttpServlet {
 		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
 		// Redirect를 통해 command값이 초기화(?)되어 
 		// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
+		
 		if(result){
-			request.getRequestDispatcher("ppProject.do").forward(request, response);
+			request.getRequestDispatcher("empcon").forward(request, response);
 		}else{
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}

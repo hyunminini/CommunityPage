@@ -144,7 +144,6 @@
 	
 	
 	<input type="hidden" name="empno" value="${empno}"></input>
-	<input type="hidden" name="pw" value="${pw}"></input>
 	
 	</form>
 </div>
