@@ -20,9 +20,11 @@ public class EmpController extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
-    	Integer empno = Integer.parseInt(request.getParameter("empno"));	
+    		
     	String pw = request.getParameter("pw");
-//    	System.out.println(empno+pw);
+    	Integer empno = Integer.parseInt(request.getParameter("empno"));
+    
+    	
   
     	boolean isCheck = false;
     	
@@ -38,8 +40,8 @@ public class EmpController extends HttpServlet {
 				session.setAttribute("empno", emp.getEmpno());
 				session.setAttribute("pw", emp.getPw());
 				request.setAttribute("Main", BoardDAO.getAllContents());
-				request.getRequestDispatcher("Main.jsp").forward(request, response);
 			}
+			request.getRequestDispatcher("Main.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -16,15 +16,17 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		boolean result = false;
 		
-		String query = "insert into BOARD( TITLE, CONTENT, CATEGORY) value(?, ?, ?)";
+		System.out.println(vo.getEmpno());
+		
+		String query ="insert into board(TITLE, EMPNO,CONTENT, CATEGORY) value(?,?,?,?)";
 		
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			
 			pstmt.setString(1, vo.getTitle());
-	        pstmt.setString(2, vo.getContent());
-	        pstmt.setString(3, vo.getCategory());
+			pstmt.setInt(2, vo.getEmpno()); 
+	        pstmt.setString(3, vo.getContent());
+	        pstmt.setString(4, vo.getCategory());
 	        
 			int count = pstmt.executeUpdate();			
 			if(count != 0){
@@ -32,7 +34,9 @@ public class BoardDAO {
 			}
 		}finally{
 			DBUtil.close(con, pstmt);
+//			DBUtil.close(rset, pstmt, con);
 		}
+		
 		return result;		
 	}
 	
@@ -42,7 +46,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<BoardDTO> alist = null;
-		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC ;";
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC;";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
