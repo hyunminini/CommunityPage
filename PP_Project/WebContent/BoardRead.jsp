@@ -120,7 +120,7 @@ function sendDelete(){
     <div class="data-btn">
     	<form name="requestForm" method=post action="ppProject.do">
 			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
-			<input type=hidden name="command" value="">
+			<input type=hidden name="command" value="read">
 			<input type=button value="수정하기" onClick="sendUpdate()">
 			<input type=button value="삭제하기" onClick="sendDelete()">
 		</form>
