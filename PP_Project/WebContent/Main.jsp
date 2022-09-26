@@ -119,7 +119,7 @@
 		        
 	     		<td >
 		            <p>
-		           		<a href="empcon?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+		           		<a href="ppProject.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
 		            </p>
 		        </td>
 
@@ -137,8 +137,16 @@
  	
 
 </table>
-<div class="add-wrap">
-	<a href="BoardWrite.html">글쓰기</a>
+<div class="add-wrap">	
+	<form action="ppProject.do" method="post">
+	
+	<button type="submit"><a href="ppProject.do?command=write&empno=${empno}">글쓰기</a></button>
+	
+	
+	<input type="hidden" name="empno" value="${empno}"></input>
+	<input type="hidden" name="pw" value="${pw}"></input>
+	
+	</form>
 </div>
 
 <footer>
