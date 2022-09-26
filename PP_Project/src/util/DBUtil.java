@@ -28,15 +28,15 @@ public class DBUtil {
 		return ds.getConnection();
 	}
 
-	public static void close(Connection con, Statement stmt, ResultSet rset) {
+	public static void close(ResultSet rset, Statement pstmt, Connection con) {
 		try {
 			if (rset != null) {
 				rset.close();
 				rset = null;
 			}
-			if (stmt != null) {
-				stmt.close();
-				stmt = null;
+			if (pstmt != null) {
+				pstmt.close();
+				pstmt = null;
 			}
 			if (con != null) {
 				con.close();
@@ -47,11 +47,11 @@ public class DBUtil {
 		}
 	}
 
-	public static void close(Connection con, Statement stmt) {
+	public static void close(Connection con, Statement pstmt) {
 		try {
-			if (stmt != null) {
-				stmt.close();
-				stmt = null;
+			if (pstmt != null) {
+				pstmt.close();
+				pstmt = null;
 			}
 			if (con != null) {
 				con.close();

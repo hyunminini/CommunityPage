@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.jndi.toolkit.url.Uri;
+//import com.sun.jndi.toolkit.url.Uri;
 
 @WebFilter(urlPatterns = "*")
 public class LoginFilter implements Filter {
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
 		
 		if(Objects.isNull(session) || Objects.isNull(session.getAttribute("empno"))) {
 			System.out.println("로그인실패");
-			hpRequest.getRequestDispatcher("Login.jsp").forward(hpRequest, hpResponse);
+			hpRequest.getRequestDispatcher("login.jsp").forward(hpRequest, hpResponse);
 		}
 			chain.doFilter(request, response);		
 

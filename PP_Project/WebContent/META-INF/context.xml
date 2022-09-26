@@ -4,10 +4,11 @@
     			auth="Container"
 	            type="javax.sql.DataSource" 
 	            driverClassName="com.mysql.cj.jdbc.Driver"
-	            url="jdbc:mysql://database-pp.cmh7qifeh8ey.us-east-1.rds.amazonaws.com:3306/pp"
-	            username="root" 
-	            password="root1234" 
+	           	url="jdbc:mysql://localhost:3306/pp?serverTimezone=Asia/Seoul"
+	            username="scott" 
+	            password="tiger" 
 	            maxTotal="20" 
 	            maxIdle="10"
 	            maxWaitMillis="-1"/>
 </Context>
+
