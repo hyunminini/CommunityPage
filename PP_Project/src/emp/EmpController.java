@@ -20,9 +20,11 @@ public class EmpController extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
-    	Integer empno = Integer.parseInt(request.getParameter("empno"));	
+    		
     	String pw = request.getParameter("pw");
-//    	System.out.println(empno+pw);
+    	Integer empno = Integer.parseInt(request.getParameter("empno"));
+    
+    	System.out.println(empno+pw);
   
     	boolean isCheck = false;
     	
