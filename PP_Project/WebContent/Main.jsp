@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -6,33 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width" initial-scal="1">
 <link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="css/board.css">
 <link rel="stylesheet" href="css/layout.css">
-<title>BoardRead.jsp</title>
-<script language=javascript>
-
-function sendUpdate(){
-		document.requestForm.command.value ="updateForm";
-		document.requestForm.submit();
-}	
-
-function sendDelete(){
-		var password = prompt("삭제할 게시물의 사원번호 입력하세요(테스)");	
-		if(password){
-			document.requestForm.command.value ="delete";
-			document.requestForm.empno.value = empno;
-			document.requestForm.submit();			
-		}else{
-			return false;
-		}
-}
-
-</script>
-<%-- ${requestScope.resultContent.board_cnum} --%>
-<style>
-	
-	
-</style>
+<link rel="stylesheet" href="css/board-list.css">
+<title>Main.jsp</title>
 
 
 </head>
@@ -94,48 +72,83 @@ function sendDelete(){
 	<!-- 메인 이미지 -->
 <div class="mainImg"></div>
 
-<div class="board-wrap">
-	<div class="max-wrap">
-		<div class="read-title">
-			
-			<p><span>${requestScope.resultContent.category}</span> ${requestScope.resultContent.title}</p>
-            <p>${requestScope.resultContent.write_date}</p>
-    	</div>
-		<div class="read-conwrap">
-			<p class="ename">${requestScope.resultContent.ename}</p>
-			
-			<ul class="read-con">
-				<li>조회: ${requestScope.resultContent.readnum} </li>
-				<li>좋아요: </li>
-				<li>댓글: </li>
-			</ul>
-		</div>    
-		
-		<div class="board">
-			${requestScope.resultContent.content}
-		</div>	
-    	
-    </div>
-    
-    <div class="data-btn">
-    	<form name="requestForm" method=post action="ppProject.do">
-			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
-			<input type=hidden name="command" value="">
-			<input type=button value="수정하기" onClick="sendUpdate()">
-			<input type=button value="삭제하기" onClick="sendDelete()">
-		</form>
-	</div>
-    
-</div>
 
-<button><a href="ppProject.do"> 목록으로 > </a></button>
+
+
+<table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
+	
+	<tr class="list-title">
+        <td>
+        	<p>번호</p>
+        </td>
+        <td>
+			<p>분류</p>
+        </td>
+        <td>
+			<p>제목</p>
+        </td>
+        <td>
+			<p>작성자</p>
+        </td>
+        <td>
+			<p>작성일</p>
+        </td>
+        <td>
+			<p>조회</p>
+        </td>
+    </tr>
+    
+ 	<c:if test="${empty Main || fn:length(Main) == 0}">
+		<tr>
+	        <td colspan="5">
+	            <p align="center"><b><span style="font-size:9pt;">등록된 방명록이 없습니다.</span></b></p>
+	        </td>
+	    </tr>
+	</c:if>
+
+	<%-- ArrayList에  BoardDTO 객체를 하나하나 data라는 반복 대입해서 사용 --%>
+	<c:forEach items="${requestScope.Main}" var="data">
+		    <tr class="board-list">
+		        <td>
+		            <p>${data.board_cnum}</p>
+		        </td>
+		        
+		        <td>
+		            <p>${data.category}</p>
+		        </td>
+		        
+	     		<td >
+		            <p>
+		           		<a href="empcon?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+		            </p>
+		        </td>
+
+		       <td>
+		            <p>${data.ename}</p>
+		        </td>
+		        <td >
+		            <p>${data.write_date}</p>
+		        </td>
+		        <td>
+		            <p>${data.readnum}</p>
+		        </td>
+		    </tr>
+	</c:forEach>
+ 	
+
+</table>
+<div class="add-wrap">
+	<a href="BoardWrite.html">글쓰기</a>
+</div>
 
 <footer>
 	<div class="max-wrap">
 	
 	</div>
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
+
 </body>
 </html>
