@@ -34,7 +34,7 @@
 	<h3 align="center">Bora, Hyunmin, Minuk</h3>
 	<div class="container">
 		<div class="login" align="center" >
-			<form id="loginForm" name="emp" action="ppProject.do" method="post">
+			<form id="loginForm" name="emp" action="empcon" method="post">
 				<label for="empno" class="form-label">아이디</label>
 				<input type="text" id="empno" name="empno" placeholder="사원번호를 입력하세요"></br><br/>
 				<label for="pw" class="form-label">비밀번호</label>

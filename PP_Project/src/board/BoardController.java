@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.cj.Session;
+
 import board.BoardDAO;
 import board.BoardDTO;
 
@@ -17,7 +19,6 @@ import board.BoardDTO;
 public class BoardController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
 		String command = request.getParameter("command");
 		
 		if(command == null){
@@ -78,7 +79,7 @@ public class BoardController extends HttpServlet {
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
 			// Main.jsp에서 뿌려주는 것.
 			request.setAttribute("Main", BoardDAO.getAllContents());
-			url = "main.jsp";
+			url = "Main.jsp";
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "모두 보기 실패 재 실행 해 주세요");
