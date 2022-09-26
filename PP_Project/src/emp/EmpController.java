@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.BoardDAO;
+
 @WebServlet("/empcon")
 public class EmpController extends HttpServlet {
 	
@@ -35,10 +37,12 @@ public class EmpController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("empno", emp.getEmpno());
 				session.setAttribute("pw", emp.getPw());
-				request.getRequestDispatcher("main.jsp").forward(request, response);
+				request.setAttribute("Main", BoardDAO.getAllContents());
+				request.getRequestDispatcher("Main.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}			
+		}
+
     }
 }
