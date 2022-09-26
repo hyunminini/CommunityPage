@@ -35,7 +35,7 @@ public class EmpController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("empno", emp.getEmpno());
 				session.setAttribute("pw", emp.getPw());
-				request.getRequestDispatcher("Main.jsp").forward(request, response);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

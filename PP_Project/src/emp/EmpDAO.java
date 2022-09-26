@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.apache.catalina.User;
 
-import util.DBUtill;
+import util.DBUtil;
 
 public class EmpDAO {
 	
@@ -29,7 +29,7 @@ public class EmpDAO {
 		EmpDTO emp = null;
 		
 		try {
-			con = DBUtill.getConnection();
+			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement("SELECT * FROM EMP WHERE EMPNO=? AND PW =?");
 			pstmt.setInt(1, empno);
 			pstmt.setString(2, pw);
@@ -43,7 +43,7 @@ public class EmpDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			DBUtill.close(rset, pstmt, con);
+			DBUtil.close(rset, pstmt, con);
 		}
 		return emp;
 	}
@@ -57,7 +57,7 @@ public class EmpDAO {
 		
 		ArrayList<EmpDTO> allData;
 		try {
-			con = DBUtill.getConnection();
+			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement("SELECT * FROM USER;");
 			
 			rset = pstmt.executeQuery();
@@ -68,7 +68,7 @@ public class EmpDAO {
 			}
 		
 		} finally {
-			DBUtill.close(rset, pstmt, con);
+			DBUtil.close(rset, pstmt, con);
 		}
 		
 		return allData;		
