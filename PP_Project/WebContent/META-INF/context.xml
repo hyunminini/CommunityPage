@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/mysql" 
+    			auth="Container"
+	            type="javax.sql.DataSource" 
+	            driverClassName="com.mysql.cj.jdbc.Driver"
+	            url="jdbc:mysql://database-pp.cmh7qifeh8ey.us-east-1.rds.amazonaws.com:3306/pp"
+	            username="root" 
+	            password="root1234" 
+	            maxTotal="20" 
+	            maxIdle="10"
+	            maxWaitMillis="-1"/>
+</Context>
