@@ -16,7 +16,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		boolean result = false;
 		
-		String query = "insert into BOARD( TITLE, CONTENT, CATEGORY) value(?, ?, ?)";
+		String query = "insert into BOARD(TITLE, CONTENT, CATEGORY) value(?, ?, ?)";
 		
 		try {
 			con = DBUtil.getConnection();
@@ -33,6 +33,7 @@ public class BoardDAO {
 		}finally{
 			DBUtil.close(con, pstmt);
 		}
+		System.out.println("result" + result);
 		return result;		
 	}
 	
@@ -42,7 +43,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<BoardDTO> alist = null;
-		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC ;";
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC;";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);

@@ -128,7 +128,7 @@ function sendDelete(){
     
 </div>
 
-<button><a href="ppProject.do"> 목록으로 > </a></button>
+<button><a href="javascript:history.back();"> 목록으로 > </a></button>
 
 <footer>
 	<div class="max-wrap">

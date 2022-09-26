@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.Session;
 
 import board.BoardDAO;
 import board.BoardDTO;
@@ -17,8 +20,11 @@ import board.BoardDTO;
 public class BoardController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
 		String command = request.getParameter("command");
+		HttpSession sesstion = request.getSession();
+		
+		Integer empno = (Integer) sesstion.getAttribute("empno"); 
+		System.out.println("command" + command);
 		
 		if(command == null){
 			command = "main";
@@ -40,14 +46,24 @@ public class BoardController extends HttpServlet {
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");	
 		String category=request.getParameter("category");
+		int empno= Integer.parseInt(request.getParameter("empno"));
+		String pw=request.getParameter("pw");
+		
+		System.out.println(empno);
+		
+		request.setAttribute("empno", empno);
+		request.setAttribute("pw", pw);
 		
 		//데이터값 입력 유무만 유효성 검증
 		// database에서 해당 값들은 not null로 지저해주었기 때문에
 		// 해당 값들이 null값이면 재입력할 수 있도록 write.html로 Redirect함
 		if(title == null || title.trim().length() == 0 ||
 		content == null || content.trim().length() == 0 ||
-		category == null || category.trim().length() == 0 ){
-			response.sendRedirect("write.html");
+		category == null || category.trim().length() == 0 || 
+//		empno == null || empno.trim().length() == 0 ||
+		pw == null || pw.trim().length() == 0 ){
+			
+			response.sendRedirect("BoardWrite.jsp?empno="+empno);
 			return;//write() 메소드 종료
 		}
 		
@@ -57,16 +73,17 @@ public class BoardController extends HttpServlet {
 		// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
 		// DAO에 넘겨준다!
 		try {
-			result = BoardDAO.writeContent(new BoardDTO(title, content, category));
+			result = BoardDAO.writeContent(new BoardDTO(title, content, category, empno, pw));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
 		}
 		
 		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
-				// Redirect를 통해 command값이 초기화(?)되어 list 목록을 불러오는 기능을 수행할 수 있도록 함!!
+		// Redirect를 통해 command값이 초기화(?)되어 
+		// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
 		if(result){
-			response.sendRedirect("ppProject.do"); 
+			request.getRequestDispatcher("ppProject.do").forward(request, response);
 		}else{
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
@@ -74,6 +91,13 @@ public class BoardController extends HttpServlet {
 	
 	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "error.jsp";
+		
+		int empno = Integer.parseInt(request.getParameter("empno"));
+		request.setAttribute("empno", empno);
+		
+		String pw = request.getParameter("pw");
+		request.setAttribute("pw", pw);
+		
 		try {
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
 			// Main.jsp에서 뿌려주는 것.
