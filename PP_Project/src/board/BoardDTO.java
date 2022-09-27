@@ -37,7 +37,17 @@ public class BoardDTO {
 		this.content = content;
 	}
 	
+	// 게시글 작성
 	public BoardDTO(String title, int empno, String category, String content) {
+		this.title = title;
+		this.empno = empno;
+		this.category = category;
+		this.content = content;
+	}
+	
+	// 수정 
+	public BoardDTO(int board_cnum, String title, int empno, String category, String content) {
+		this.board_cnum = board_cnum;
 		this.title = title;
 		this.empno = empno;
 		this.category = category;
@@ -54,15 +64,6 @@ public class BoardDTO {
 		this.write_date = write_date;
 		this.readnum = readnum;
 	}
-	
-//	public BoardDTO(int board_cnum, String ename, String write_date, int readnum, String title, String content) {
-//		this.board_cnum = board_cnum;
-//		this.ename = ename;
-//		this.write_date = write_date;
-//		this.readnum = readnum;
-//		this.title = title;
-//		this.content = content;
-//	}
 
 	public String getEname() {
 		return ename;
@@ -119,8 +120,6 @@ public class BoardDTO {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	
-	
 
 	@Override
 	public String toString() {

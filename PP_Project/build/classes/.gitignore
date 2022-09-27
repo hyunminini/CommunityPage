@@ -1,2 +1,8 @@
 /board/
+/com/
+/comment/
 /emp/
+/hateTbl/
+/likeTbl/
+/uploadFile/
+/util/

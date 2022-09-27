@@ -84,7 +84,7 @@ function checkValid() {
 <div class="mainImg"></div>
 
 <div class="form-wrap">
-<form name="writeForm" method="post" action="ppProject.do" onSubmit='checkValid()'>
+<form name="writeForm" method="post" action="board.do" onSubmit='checkValid()'>
 	<input type="hidden" name="command" value="write">
 	<table align="center" cellpadding="5" cellspacing="2" width="100%" border="1">
       	<div class="board-text-flex">
@@ -127,7 +127,6 @@ function checkValid() {
 	<div class="btn-wrap">
 		<input class="submit" type="submit" value="게시글 작성"> 
 	</div>
-	
 	
 </form>
 

@@ -8,13 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width" initial-scal="1">
 <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/board.css">
 <link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/board-list.css">
-<title>Main.jsp</title>
-
+<title>update.jsp</title>
+<style>
+</style>
 
 </head>
 <body>
+
 
 <!-- 네비게이션 -->
 <nav class="navbar navbar-default">
@@ -72,76 +74,55 @@
 	<!-- 메인 이미지 -->
 <div class="mainImg"></div>
 
-
-
-
-<table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
-	
-	<tr class="list-title">
-        <td>
-        	<p>번호</p>
-        </td>
-        <td>
-			<p>분류</p>
-        </td>
-        <td>
-			<p>제목</p>
-        </td>
-        <td>
-			<p>작성자</p>
-        </td>
-        <td>
-			<p>작성일</p>
-        </td>
-        <td>
-			<p>조회</p>
-        </td>
-    </tr>
+<div class="form-wrap">
+<form name=updateForm method=post action="board.do" onSubmit='return checkValid()'>
+    <input type="hidden" value="update" name="command">
+    <input type='hidden' name='board_cnum' value="${resultContent.board_cnum}">
+<!-- 	<input type="hidden" name="command" value="write"> -->
+	<table align="center" cellpadding="5" cellspacing="2" width="100%" border="1">
+      	<div class="board-text-flex">
+      		<h3 class="board-name">게시글 수정</h3>
+      		<p><a href="javascript:history.back();">뒤로가기 아이콘</a></p>
+      	</div>
+    	<tr>
+       	 	<td class="left-td">
+            	<p class="board-in-text">분류</p>
+        	</td>	
+        	<td class="right-td">
+				<select class="category" name="category" value="${resultContent.category}">
+					<option value="자유게시판">자유게시판</option>
+					<option value="점메추">점메추</option>
+					<option value="유머">유머</option>
+				</select>
+			</td>
+    	</tr>
+    	<tr>
+        	<td class="left-td">
+            	<p class="board-in-text">제목</p>
+       		</td>
+        	<td class="right-td">
+				<input class="title" type=text name="title" value="${resultContent.title}">
+			</td>
+   		</tr>
     
- 	<c:if test="${empty Main || fn:length(Main) == 0}">
-		<tr>
-	        <td colspan="5">
-	            <p align="center"><b><span style="font-size:9pt;">등록된 방명록이 없습니다.</span></b></p>
-	        </td>
-	    </tr>
-	</c:if>
-
-	<%-- ArrayList에  BoardDTO 객체를 하나하나 data라는 반복 대입해서 사용 --%>
-	<c:forEach items="${requestScope.Main}" var="data">
-		    <tr class="board-list">
-		        <td>
-		            <p>${data.board_cnum}</p>
-		        </td>
-		        
-		        <td>
-		            <p>${data.category}</p>
-		        </td>
-		        
-	     		<td >
-		            <p>
-		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
-		            </p>
-		        </td>
-
-		       <td>
-		            <p>${data.ename}</p>
-		        </td>
-		        <td >
-		            <p>${data.write_date}</p>
-		        </td>
-		        <td>
-		            <p>${data.readnum}</p>
-		        </td>
-		    </tr>
-	</c:forEach>
- 	
-
-</table>
-<div class="add-wrap">	
-	<form action="board.do" method="post">
-		<button type="submit"><a href="board.do?command=write&empno=${empno}">게시글 작성</a></button>
-		<input type="hidden" name="empno" value="${empno}"></input>
-	</form>
+   		<tr>
+       		<td class="left-td">
+            	<p class="board-in-text">내 용</p>
+        	</td>
+        	<td class="right-td">
+				<textarea name="content" cols="50" rows="10" value="${resultContent.content}">
+					${resultContent.content}
+				</textarea>
+			</td>
+    	</tr>
+	</table>
+	<input type="hidden" name="board_cnum" value="${board_cnum}"></input>
+	<input type="hidden" name="empno" value="${empno}"></input>
+	<div class="btn-wrap">
+		<input class="submit" type="submit" value="게시글 수정"> 
+	</div>
+	
+</form>
 </div>
 
 <footer>
@@ -152,6 +133,5 @@
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
-
 </body>
 </html>
