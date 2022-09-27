@@ -17,6 +17,7 @@ import com.mysql.cj.Session;
 
 import board.BoardDAO;
 import board.BoardDTO;
+import emp.EmpDAO;
 
 // boardcon
 @WebServlet("/board.do")
@@ -48,6 +49,21 @@ public class BoardController extends HttpServlet {
 			updateForm(request, response);
 		}else if(command.equals("update")){
 			update(request, response);
+		}else if(command.equals("backDrop")){
+			backDrop(request, response);
+		}
+	}
+	
+	private void backDrop(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		boolean back = true;
+		try {
+			if (back == true) {
+				request.setAttribute("Main", BoardDAO.getAllContents());
+			}
+			request.getRequestDispatcher("Main.jsp").forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
