@@ -24,9 +24,6 @@ public class BoardDTO {
 		this.pw = pw;
 	}
 	
-	
-	
-	
 	// 게시물 보기
 	public BoardDTO(int board_cnum, String title, String write_date, String category, String ename, int readnum, String content) {
 		this.title = title;
@@ -46,12 +43,11 @@ public class BoardDTO {
 	}
 	
 	// 수정 
-	public BoardDTO(int board_cnum, String title, int empno, String category, String content) {
-		this.board_cnum = board_cnum;
+	public BoardDTO( String title, String category, String content, int board_cnum) {
 		this.title = title;
-		this.empno = empno;
 		this.category = category;
 		this.content = content;
+		this.board_cnum = board_cnum;
 	}
 	
 	// 게시글 리스트

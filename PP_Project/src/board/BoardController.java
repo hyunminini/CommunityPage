@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.StringContent;
 
 import com.mysql.cj.Session;
 
@@ -20,6 +21,9 @@ import board.BoardDTO;
 // boardcon
 @WebServlet("/board.do")
 public class BoardController extends HttpServlet {
+	
+	String strNum= "";
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String command = request.getParameter("command");
@@ -54,8 +58,6 @@ public class BoardController extends HttpServlet {
 		String category=request.getParameter("category");
 		Integer empno= Integer.parseInt(request.getParameter("empno"));
 		
-//		System.out.println("writempno:"+empno);
-		
 		request.setAttribute("empno", empno);
 		
 		//데이터값 입력 유무만 유효성 검증
@@ -68,14 +70,10 @@ public class BoardController extends HttpServlet {
 		if(title == null || title.trim().length() == 0 ||
 		content == null || content.trim().length() == 0 ||
 		category == null || category.trim().length() == 0)
-//		empno == null || empno.trimToSize() == 0 
-//		pw == null || pw.trim().length() == 0 )
-		
 		{
 			response.sendRedirect("BoardWrite.jsp?empno="+empno);
 			return;//write() 메소드 종료
 		}
-		
 		
 		// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
 		// DAO에 넘겨준다!
@@ -86,7 +84,6 @@ public class BoardController extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
 		}
-		
 		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
 		// Redirect를 통해 command값이 초기화(?)되어 
 		// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
@@ -103,7 +100,6 @@ public class BoardController extends HttpServlet {
 		
 		int empno = Integer.parseInt(request.getParameter("empno"));
 		request.setAttribute("empno", empno);
-		
 		String pw = request.getParameter("pw");
 		request.setAttribute("pw", pw);
 		
@@ -120,7 +116,7 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private void read(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String strNum=request.getParameter("board_cnum");
+		strNum = request.getParameter("board_cnum");
 		System.out.println("read strNum: " + strNum);
 		if(strNum==null || strNum.length() == 0){
 			response.sendRedirect("board.do");
@@ -175,17 +171,11 @@ public class BoardController extends HttpServlet {
 	// 수정 클릭
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// write와 유사하게 수정된 데이터를 가져옴.
-		String strNum = request.getParameter("board_cnum");
+		String strNum=request.getParameter("board_cnum");
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");	
 		String category=request.getParameter("category");
 		Integer empno= Integer.parseInt(request.getParameter("empno"));
-		
-		System.out.println("Update strNum: " + strNum);
-		System.out.println("Update title: " + title);
-		System.out.println("Update content: " + content);
-		System.out.println("Update category: " + category);
-		System.out.println("Update empno: " + empno);
 		
 		if(strNum == null || strNum.trim().length() == 0 ||
 				title == null || title.trim().length() == 0 ||
@@ -194,22 +184,26 @@ public class BoardController extends HttpServlet {
 				);
 		
 		boolean result = false;
+		BoardDTO gContent = null;
 		
 		try {
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
-			// Main.jsp에서 뿌려주는 것. error;;
-			result = BoardDAO.updateContent(new BoardDTO(Integer.parseInt(strNum), title, empno, category, content));
+			// Main.jsp에서 뿌려주는 것
+			result = BoardDAO.updateContent(new BoardDTO(title, category, content, Integer.parseInt(strNum)));
+			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
+			System.out.println("업데이트 strNum: " + strNum);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 수정 실패");
 		}
 		if(result){
-			response.sendRedirect("board.do");
+			response.sendRedirect("board.do?command=read&board_cnum=" +strNum);
 			return; // update() 메소드 종료
 		}
 		request.setAttribute("error", "게시글 수정 실패");
 		request.getRequestDispatcher("error.jsp").forward(request, response);
 	}
+	
 	
 	// 수정 form
 	private void updateForm(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException{

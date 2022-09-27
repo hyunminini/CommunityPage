@@ -75,7 +75,12 @@
 <div class="mainImg"></div>
 
 <div class="form-wrap">
-<form name=updateForm method=post action="board.do" onSubmit='return checkValid()'>
+
+	<%
+		String board_cnum = (String) request.getParameter("board_cnum");
+	%>
+
+<form name=updateForm method=post action="board.do?command=update&board_cnum=<%=board_cnum %>" onSubmit='checkValid()'>
     <input type="hidden" value="update" name="command">
     <input type='hidden' name='board_cnum' value="${resultContent.board_cnum}">
 <!-- 	<input type="hidden" name="command" value="write"> -->
@@ -116,6 +121,7 @@
 			</td>
     	</tr>
 	</table>
+
 	<input type="hidden" name="board_cnum" value="${board_cnum}"></input>
 	<input type="hidden" name="empno" value="${empno}"></input>
 	<div class="btn-wrap">

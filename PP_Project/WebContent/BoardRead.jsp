@@ -123,7 +123,6 @@ function sendDelete(){
     	<form name="requestForm" method=post action="board.do?command=updateForm&board_cnum=<%=board_cnum %>">
 			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
 			<input type=hidden name="command" value="read">
-			
 			<input type="hidden" name="title" value="${requestScope.resultContent.title}">
 			<input type="hidden" name="content" value="${requestScope.resultContent.content}">	
 			

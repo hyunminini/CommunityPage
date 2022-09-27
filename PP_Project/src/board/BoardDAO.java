@@ -132,22 +132,21 @@ public class BoardDAO {
 			Connection con = null;	
 			PreparedStatement pstmt = null;
 			boolean result = false;
-			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = 25";
+			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ? ";
 			
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
 				pstmt.setString(1, vo.getTitle());
-				pstmt.setInt(2, vo.getEmpno()); 
-		        pstmt.setString(3, vo.getContent());
-		        pstmt.setString(4, vo.getCategory());
-//		        pstmt.setInt(5, vo.getBoard_cnum());
+		        pstmt.setString(2, vo.getContent());
+		        pstmt.setString(3, vo.getCategory());
+		        pstmt.setInt(4, vo.getBoard_cnum());
 		        
-//				int count = pstmt.executeUpdate();
-//				
-//				if(count != 0){
-//					result = true;
-//				}
+				int count = pstmt.executeUpdate();
+				
+				if(count != 0){
+					result = true;
+				}
 				
 			}finally{
 				DBUtil.close(con, pstmt);
