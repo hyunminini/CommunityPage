@@ -28,13 +28,9 @@ function sendDelete(){
 }
 
 </script>
-<%-- ${requestScope.resultContent.board_cnum} --%>
 <style>
 	
-	
 </style>
-
-
 </head>
 <body>
 
@@ -53,7 +49,7 @@ function sendDelete(){
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="Main.jsp">
+			<a class="navbar-brand" href="main.jsp">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -76,14 +72,15 @@ function sendDelete(){
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					관리자페이지 접속
+					사번  ${empno}
+	
 					<span class="caret"></span>
 					</a>
 					
 				<!-- 드랍다운 아이템 영역 -->
 				<ul class="dropdown-menu">
 					<li class="active"> 
-						<a href="Login.jsp">접속하기</a>
+						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
 				</ul>
 			</li>
@@ -114,30 +111,25 @@ function sendDelete(){
 		<div class="board">
 			${requestScope.resultContent.content}
 		</div>	
-    	
-    </div>
-    <%
-		String board_cnum = (String) request.getParameter("board_cnum");
-	%>
+     	
+    <% String board_cnum = (String) request.getParameter("board_cnum"); %>
     <div class="data-btn">
     	<form name="requestForm" method=post action="board.do?command=updateForm&board_cnum=<%=board_cnum %>">
 			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
 			<input type=hidden name="command" value="read">
-<<<<<<< HEAD
-=======
-			
 			<input type="hidden" name="title" value="${requestScope.resultContent.title}">
 			<input type="hidden" name="content" value="${requestScope.resultContent.content}">	
-			
->>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 			<input type=button value="수정하기" onClick="sendUpdate()">
 			<input type=button value="삭제하기" onClick="sendDelete()">
 		</form>
 	</div>
-    
-</div>
 
-<button><a href="javascript:history.back();"> 목록으로 > </a></button>
+	<form id="loginForm" name="emp" action="board.do?command=backDrop" method="post">
+		<button type="submit">목록으로 ></button><br/>
+	</form>
+	
+	</div>
+</div>
 
 <footer>
 	<div class="max-wrap">

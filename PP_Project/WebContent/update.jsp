@@ -33,7 +33,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="Main.jsp">
+			<a class="navbar-brand" href="main.jsp">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -56,14 +56,15 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					관리자페이지 접속
+					사번  ${empno}
+	
 					<span class="caret"></span>
 					</a>
 					
 				<!-- 드랍다운 아이템 영역 -->
 				<ul class="dropdown-menu">
 					<li class="active"> 
-						<a href="Login.jsp">접속하기</a>
+						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
 				</ul>
 			</li>
@@ -75,10 +76,14 @@
 <div class="mainImg"></div>
 
 <div class="form-wrap">
-<form name=updateForm method=post action="board.do" onSubmit='return checkValid()'>
+
+	<%
+		String board_cnum = (String) request.getParameter("board_cnum");
+	%>
+
+<form name=updateForm method=post action="board.do?command=update&board_cnum=<%=board_cnum %>" onSubmit='checkValid()'>
     <input type="hidden" value="update" name="command">
     <input type='hidden' name='board_cnum' value="${resultContent.board_cnum}">
-<!-- 	<input type="hidden" name="command" value="write"> -->
 	<table align="center" cellpadding="5" cellspacing="2" width="100%" border="1">
       	<div class="board-text-flex">
       		<h3 class="board-name">게시글 수정</h3>

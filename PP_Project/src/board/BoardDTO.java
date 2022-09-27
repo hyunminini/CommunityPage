@@ -37,28 +37,21 @@ public class BoardDTO {
 		this.content = content;
 	}
 	
-<<<<<<< HEAD
-=======
 	// 게시글 작성
->>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 	public BoardDTO(String title, int empno, String category, String content) {
 		this.title = title;
 		this.empno = empno;
 		this.category = category;
 		this.content = content;
 	}
-<<<<<<< HEAD
-=======
 	
 	// 수정 
-	public BoardDTO(int board_cnum, String title, int empno, String category, String content) {
-		this.board_cnum = board_cnum;
+	public BoardDTO( String title, String category, String content, int board_cnum) {
 		this.title = title;
-		this.empno = empno;
 		this.category = category;
 		this.content = content;
+		this.board_cnum = board_cnum;
 	}
->>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 	
 	// 게시글 리스트
 	public BoardDTO(int board_cnum, String category, String title, int empno, String ename, String write_date, int readnum) {
@@ -126,11 +119,6 @@ public class BoardDTO {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 
 	@Override
 	public String toString() {

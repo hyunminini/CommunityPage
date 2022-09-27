@@ -14,7 +14,7 @@
 	${requestScope.error}  
 	<br>
 	
-	<a href="board.do"> 리스트로 돌아가기</a>
+	<a href="login"> 리스트로 돌아가기</a>
 	
 </body>
 </html>
