@@ -115,20 +115,25 @@ function sendDelete(){
 			${requestScope.resultContent.content}
 		</div>	
     	
-    </div>
-    
+    <% String board_cnum = (String) request.getParameter("board_cnum"); %>
     <div class="data-btn">
-    	<form name="requestForm" method=post action="ppProject.do">
+    	<form name="requestForm" method=post action="board.do?command=updateForm&board_cnum=<%=board_cnum %>">
 			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
 			<input type=hidden name="command" value="read">
+			<input type="hidden" name="title" value="${requestScope.resultContent.title}">
+			<input type="hidden" name="content" value="${requestScope.resultContent.content}">	
 			<input type=button value="수정하기" onClick="sendUpdate()">
 			<input type=button value="삭제하기" onClick="sendDelete()">
 		</form>
 	</div>
-    
-</div>
 
-<button><a href="javascript:history.back();"> 목록으로 > </a></button>
+	<form id="loginForm" name="emp" action="board.do?command=backDrop" method="post">
+		<button type="submit">목록으로 ></button><br/>
+	</form>
+	
+	</div>
+</div>
+		
 
 <footer>
 	<div class="max-wrap">
