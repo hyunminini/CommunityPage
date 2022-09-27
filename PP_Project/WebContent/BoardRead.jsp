@@ -116,11 +116,20 @@ function sendDelete(){
 		</div>	
     	
     </div>
-    
+    <%
+		String board_cnum = (String) request.getParameter("board_cnum");
+	%>
     <div class="data-btn">
-    	<form name="requestForm" method=post action="ppProject.do">
+    	<form name="requestForm" method=post action="board.do?command=updateForm&board_cnum=<%=board_cnum %>">
 			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
 			<input type=hidden name="command" value="read">
+<<<<<<< HEAD
+=======
+			
+			<input type="hidden" name="title" value="${requestScope.resultContent.title}">
+			<input type="hidden" name="content" value="${requestScope.resultContent.content}">	
+			
+>>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 			<input type=button value="수정하기" onClick="sendUpdate()">
 			<input type=button value="삭제하기" onClick="sendDelete()">
 		</form>

@@ -1,111 +1,137 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter"%>
-<%@ page import="bbs.Bbs"%>
-<%@ page import="bbs.BbsDAO"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width" , initial-scale="1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width" initial-scal="1">
 <link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/layout.css">
+<title>update.jsp</title>
+<style>
+</style>
 
-<title>JSP 게시판 웹사이트</title>
 </head>
 <body>
-	<%
-		String userID = null;
-		if ((String) session.getAttribute("userID") != null) {
-			userID = (String) session.getAttribute("userID");
-		}
-		if (userID == null) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('로그인을 해주세요.')");
-			script.println("location.href='login.jsp'");
-			script.println("</script>");
-		}
 
-		int bbsID = 0;
-		if (request.getParameter("bbsID") != null) {
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
-		}
-		if (bbsID == 0) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("</script>");
-		}
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
-		if (!userID.equals(bbs.getUserID())) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("</script>");
-		}
-	%>
 
-	<nav class="navbar navbar-default">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+<!-- 네비게이션 -->
+<nav class="navbar navbar-default">
+		<!-- 네비게이션 상단 Header  --> 
+		<div class="navnar-header">
+			<button 
+				type="button"
+				class="navbar-toggle collapese"
+				data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1"
 				aria-expanded="false">
+				
 				<span class="icon-bar"></span>
-				<!-- 게시판 아이콘 작대기(-) 하나를 의미 -->
 				<span class="icon-bar"></span>
-				<!-- 게시판 아이콘 작대기(-) 하나를 의미 -->
 				<span class="icon-bar"></span>
-				<!-- 게시판 아이콘 작대기(-) 하나를 의미 -->
 			</button>
-			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹사이트</a>
+			<a class="navbar-brand" href="Main.jsp">
+				PP 게시판 웹 사이트
+			</a>			
 		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
+		
+		<!-- 메뉴 영역 깃허브 링크 이동 -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="main.jsp">메인</a></li>
-				<li class="active"><a href="bbs.jsp">게시판</a></li>
-			</ul>
-
+				<li><a href="#">강보라</a></li>
+				<li><a href="#">김현민</a></li>
+				<li><a href="#">김민욱</a></li>
+			</ul>		
+		
+			<!-- 메뉴 드랍다운 영역 -->
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">회원관리<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="logoutAction.jsp">로그아웃</a></li>
-					</ul></li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container">
-		<div class="row">
-			<form action="updateAction.jsp?bbsID=<%=bbsID%>" method="post">
-				<table class="table table-striped"
-					style="text-align: center; border: 1px solid #dddddd;">
-					<tr>
-						<td colspan="2"
-							style="background-color: #eeeeee; text-align: center">게시판
-							글수정 양식</td>
-					</tr>
-					<tr>
-						<td><input type="text" class="form-control"
-							placeholder="글 제목" name="bbsTitle" maxlength="50"
-							value="<%=bbs.getBbsTitle()%>"></td>
-					</tr>
-					<tr>
-						<td><textarea class="form-control" placeholder="글 내용"
-								name="bbsContent" maxlength="2048" style="height: 350px;"><%=bbs.getBbsContent()%></textarea></td>
-					</tr>
-				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="글수정">
-			</form>
-		</div>
+				<li class="dropdown">
+					<a href="#"
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						role="button"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+					관리자페이지 접속
+					<span class="caret"></span>
+					</a>
+					
+				<!-- 드랍다운 아이템 영역 -->
+				<ul class="dropdown-menu">
+					<li class="active"> 
+						<a href="Login.jsp">접속하기</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
+</nav>
+	
+	<!-- 메인 이미지 -->
+<div class="mainImg"></div>
 
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+<div class="form-wrap">
+<form name=updateForm method=post action="board.do" onSubmit='return checkValid()'>
+    <input type="hidden" value="update" name="command">
+    <input type='hidden' name='board_cnum' value="${resultContent.board_cnum}">
+<!-- 	<input type="hidden" name="command" value="write"> -->
+	<table align="center" cellpadding="5" cellspacing="2" width="100%" border="1">
+      	<div class="board-text-flex">
+      		<h3 class="board-name">게시글 수정</h3>
+      		<p><a href="javascript:history.back();">뒤로가기 아이콘</a></p>
+      	</div>
+    	<tr>
+       	 	<td class="left-td">
+            	<p class="board-in-text">분류</p>
+        	</td>	
+        	<td class="right-td">
+				<select class="category" name="category" value="${resultContent.category}">
+					<option value="자유게시판">자유게시판</option>
+					<option value="점메추">점메추</option>
+					<option value="유머">유머</option>
+				</select>
+			</td>
+    	</tr>
+    	<tr>
+        	<td class="left-td">
+            	<p class="board-in-text">제목</p>
+       		</td>
+        	<td class="right-td">
+				<input class="title" type=text name="title" value="${resultContent.title}">
+			</td>
+   		</tr>
+    
+   		<tr>
+       		<td class="left-td">
+            	<p class="board-in-text">내 용</p>
+        	</td>
+        	<td class="right-td">
+				<textarea name="content" cols="50" rows="10" value="${resultContent.content}">
+					${resultContent.content}
+				</textarea>
+			</td>
+    	</tr>
+	</table>
+	<input type="hidden" name="board_cnum" value="${board_cnum}"></input>
+	<input type="hidden" name="empno" value="${empno}"></input>
+	<div class="btn-wrap">
+		<input class="submit" type="submit" value="게시글 수정"> 
+	</div>
+	
+</form>
+</div>
+
+<footer>
+	<div class="max-wrap">
+	
+	</div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
 </body>
 </html>

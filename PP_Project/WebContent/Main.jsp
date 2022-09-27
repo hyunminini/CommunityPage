@@ -119,7 +119,11 @@
 		        
 	     		<td >
 		            <p>
+<<<<<<< HEAD
 		           		<a href="ppProject.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+=======
+		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+>>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 		            </p>
 		        </td>
 
@@ -138,6 +142,7 @@
 
 </table>
 <div class="add-wrap">	
+<<<<<<< HEAD
 	<form action="ppProject.do" method="post">
 	
 	<button type="submit"><a href="ppProject.do?command=write&empno=${empno}">글쓰기</a></button>
@@ -145,6 +150,11 @@
 	
 	<input type="hidden" name="empno" value="${empno}"></input>
 	
+=======
+	<form action="board.do" method="post">
+		<button type="submit"><a href="board.do?command=write&empno=${empno}">게시글 작성</a></button>
+		<input type="hidden" name="empno" value="${empno}"></input>
+>>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 	</form>
 </div>
 

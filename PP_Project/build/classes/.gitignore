@@ -1,2 +1,11 @@
 /board/
+<<<<<<< HEAD
+=======
+/com/
+/comment/
+>>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 /emp/
+/hateTbl/
+/likeTbl/
+/uploadFile/
+/util/

@@ -23,9 +23,12 @@ public class BoardDAO {
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
+<<<<<<< HEAD
 			
 
 			
+=======
+>>>>>>> e5dbe3fdb7ee1f8edd5dfe3317c63d264ea4d00a
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setInt(2, vo.getEmpno()); 
 	        pstmt.setString(3, vo.getContent());
@@ -71,14 +74,11 @@ public class BoardDAO {
 		public static BoardDTO getContent(int board_cnum, boolean flag) throws SQLException{		
 
 			Connection con = null;	
-
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			BoardDTO vo  = null;
 			String query1="update BOARD set READNUM = READNUM+1 where BOARD_CNUM = ?";
 			String query2="select B.TITLE, B.WRITE_DATE, B.CATEGORY, E.ENAME, B.READNUM, B.CONTENT from BOARD B, EMP E where board_cnum = ?";
-			
-			
 			
 			try {
 				con = DBUtil.getConnection();
@@ -103,7 +103,7 @@ public class BoardDAO {
 				}
 				
 			}finally{
-				DBUtil.close(con, pstmt);
+				DBUtil.close(rset, pstmt, con);
 			}
 			return vo;
 		}
@@ -114,7 +114,7 @@ public class BoardDAO {
 			PreparedStatement pstmt = null;
 			boolean result = false;
 			
-			String query = "DELETE FROM a USING BOARD as a LEFT JOIN EMP AS b ON a.EMPNO = b.EMPNO where b.EMPNO = 1003";
+			String query = "DELETE FROM a USING BOARD as a LEFT JOIN EMP AS b ON a.EMPNO = b.EMPNO where b.EMPNO = ?";
 			
 			try {
 				con = DBUtil.getConnection();
@@ -133,5 +133,34 @@ public class BoardDAO {
 			}
 			return result;
 		}
+		
+		// 게시물 수정
+		public static boolean updateContent(BoardDTO vo) throws SQLException{
+			Connection con = null;	
+			PreparedStatement pstmt = null;
+			boolean result = false;
+			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = 25";
+			
+			try {
+				con = DBUtil.getConnection();
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, vo.getTitle());
+				pstmt.setInt(2, vo.getEmpno()); 
+		        pstmt.setString(3, vo.getContent());
+		        pstmt.setString(4, vo.getCategory());
+//		        pstmt.setInt(5, vo.getBoard_cnum());
+		        
+//				int count = pstmt.executeUpdate();
+//				
+//				if(count != 0){
+//					result = true;
+//				}
+				
+			}finally{
+				DBUtil.close(con, pstmt);
+			}
+			return result;
+		}
+
 		
 }
