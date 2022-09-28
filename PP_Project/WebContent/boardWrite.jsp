@@ -22,7 +22,6 @@ function checkValid() {
     return true;
 }
 </script>
-
 </head>
 <body>
 
@@ -42,7 +41,7 @@ function checkValid() {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="Main.jsp">
+			<a class="navbar-brand" href="main.jsp">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -65,14 +64,14 @@ function checkValid() {
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					관리자페이지 접속
+					사번  ${empno}
+	
 					<span class="caret"></span>
 					</a>
-					
 				<!-- 드랍다운 아이템 영역 -->
 				<ul class="dropdown-menu">
 					<li class="active"> 
-						<a href="Login.jsp">접속하기</a>
+						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
 				</ul>
 			</li>
@@ -127,6 +126,7 @@ function checkValid() {
 	<div class="btn-wrap">
 		<input class="submit" type="submit" value="게시글 작성"> 
 	</div>
+	
 	
 </form>
 

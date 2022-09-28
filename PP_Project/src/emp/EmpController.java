@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import board.BoardDAO;
 
-@WebServlet("/empcon")
+@WebServlet("/emp.do")
 public class EmpController extends HttpServlet {
 	
     public EmpController() {
@@ -20,31 +20,22 @@ public class EmpController extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
-    		
-    	String pw = request.getParameter("pw");
-    	Integer empno = Integer.parseInt(request.getParameter("empno"));
-    
-    	
-  
-    	boolean isCheck = false;
-    	
-    	request.setAttribute("empno", empno);
-    	request.setAttribute("pw", pw);
-//    	System.out.println("EmpController"+empno+pw);
-    	
-    	EmpDTO emp;
+		Integer empno = Integer.parseInt(request.getParameter("empno"));
+		
 		try {
-			emp = EmpDAO.loginTest(empno, pw);			
-			if (emp !=null) {
+			empno = Integer.parseInt(request.getParameter("empno"));		
+			
+			if (empno !=null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("empno", emp.getEmpno());
-				session.setAttribute("pw", emp.getPw());
+				session.setAttribute("empno", empno);
 				request.setAttribute("Main", BoardDAO.getAllContents());
+//				request.setAttribute("ename", Emp);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
-			request.getRequestDispatcher("Main.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
+		
     }
 }

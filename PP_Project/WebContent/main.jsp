@@ -12,6 +12,34 @@
 <link rel="stylesheet" href="css/board-list.css">
 <title>Main.jsp</title>
 
+<style>
+	
+.add-btn {
+	border: none;
+	background: none;
+	width: auto;
+	height: auto;
+}
+
+.add-btn a{
+	text-decoration: none;
+}
+
+.add-btn a:hover {
+	transition: 0.5s;
+	background: #f9f9f9;
+}
+	
+.add-btn a:active {
+	background: #e9e9e9;
+}
+
+.max-wrap {
+	width: 100%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+</style>
 
 </head>
 <body>
@@ -31,7 +59,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="Main.jsp">
+			<a class="navbar-brand" href="main.jsp">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -54,14 +82,15 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					관리자페이지 접속
+					사번  ${empno}
+	
 					<span class="caret"></span>
 					</a>
 					
 				<!-- 드랍다운 아이템 영역 -->
 				<ul class="dropdown-menu">
 					<li class="active"> 
-						<a href="Login.jsp">접속하기</a>
+						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
 				</ul>
 			</li>
@@ -74,7 +103,7 @@
 
 
 
-
+<div class="max-wrap">
 <table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
 	
 	<tr class="list-title">
@@ -117,9 +146,10 @@
 		            <p>${data.category}</p>
 		        </td>
 		        
+		        
 	     		<td >
 		            <p>
-		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}&empno=${empno}">${data.title}</a>
 		            </p>
 		        </td>
 
@@ -134,15 +164,17 @@
 		        </td>
 		    </tr>
 	</c:forEach>
- 	
-
 </table>
+
 <div class="add-wrap">	
 	<form action="board.do" method="post">
-		<button type="submit"><a href="board.do?command=write&empno=${empno}">게시글 작성</a></button>
+		<button class="add-btn" type="submit"><a href="board.do?command=write&empno=${empno}">게시글 작성</a></button>
 		<input type="hidden" name="empno" value="${empno}"></input>
 	</form>
 </div>
+</div>
+
+
 
 <footer>
 	<div class="max-wrap">

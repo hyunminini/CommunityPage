@@ -1,5 +1,17 @@
 package board;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+
 public class BoardDTO {
 	private int board_cnum;			// 글 번호
 	private String title;			// 글 제목
@@ -10,7 +22,9 @@ public class BoardDTO {
 	private String write_date;		// 글 작성일
 	private int readnum;			// 글 조회수
 	private String pw;				// 비밀번호
-	private String co_write_date; // 댓글 작성 날
+	private String co_write_date;   // 댓글 작성 날
+	private int like_count; 			// 좋아요 갯수
+	
     
 	
 	public BoardDTO(int board_cnum){
@@ -24,6 +38,9 @@ public class BoardDTO {
 		this.empno = empno;
 		this.pw = pw;
 	}
+	
+	
+	
 	
 	// 게시물 보기
 	public BoardDTO(int board_cnum, String title, String write_date, String category, String ename, int readnum, String content) {
@@ -61,76 +78,5 @@ public class BoardDTO {
 		this.write_date = write_date;
 		this.readnum = readnum;
 	}
-
-	public String getEname() {
-		return ename;
-	}
-	public void setEname(String ename) {
-		this.ename = ename;
-	}
-	
-	public int getEmpno() {
-		return empno;
-	}
-	public void setEmpno(int empno) {
-		this.empno = empno;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	public int getBoard_cnum() {
-		return board_cnum;
-	}
-	public void setBoard_cnum(int board_cnum) {
-		this.board_cnum = board_cnum;
-	}
-	public int getReadnum() {
-		return readnum;
-	}
-	public void setReadnum(int readnum) {
-		this.readnum = readnum;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getWrite_date() {
-		return write_date;
-	}
-	public void setWrite_day(String write_date) {
-		this.write_date = write_date;
-	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-	
-	public String getCo_write_date() {
-		return co_write_date;
-	}
-	public void setCo_Write_date(String co_write_date) {
-		this.co_write_date = co_write_date;
-	}
-	
-
-//	@Override
-//	public String toString() {
-//		return "BoardDTO [board_cnum=" + board_cnum + ", title=" + title + ", empno=" + empno + ", ename=" + ename + ", category=" + category
-//				+ ", content=" + content + ", write_date=" + write_date + ", readnum=" + readnum
-//				+ "]";
-//	}
 	
 }

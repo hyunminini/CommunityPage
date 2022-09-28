@@ -27,8 +27,8 @@ public class CommentDAO {
 			clist = new ArrayList<CommentDTO>();
 			while(rset.next()){
 				clist.add(new CommentDTO(rset.getInt(1),
-										 rset.getInt(2),
-										 rset.getString(3),
+										 rset.getString(10),
+										 rset.getInt(3),
 										 rset.getString(4),
 										 rset.getString(5)));
 			}
@@ -44,22 +44,25 @@ public class CommentDAO {
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		boolean result = false;
+		System.out.println("1" + result);
+		System.out.println("commentDAO" + vo);
 		
 		try {
 			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement("insert into comment(ENAME, CO_CONTENT) values (?, ?);");
-			pstmt.setString(1, vo.getEname());
-			pstmt.setString(2, vo.getCo_content());
-			pstmt.setString(3, vo.getCo_write_date());
-			pstmt.setInt(4, vo.getEmpno());
+			pstmt = con.prepareStatement("insert into comment(EMPNO, BOARD_CNUM, CO_CONTENT) values (?, ?, ?);");
+			pstmt.setInt(1, vo.getEmpno());
+			pstmt.setInt(2, vo.getBoard_cnum());
+			pstmt.setString(3, vo.getCo_content());
 			
 			int count = pstmt.executeUpdate();
 			if(count != 0) {
 				result = true;
+				System.out.println("실행" + result);
 			}
 			
 		} finally {
 			DBUtil.close(con,  pstmt);
+			System.out.println("파이널" + result);
 		}
 		return result;
 	}
