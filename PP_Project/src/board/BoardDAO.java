@@ -18,7 +18,7 @@ public class BoardDAO {
 		
 		System.out.println(vo.getEmpno());
 		
-		String query ="insert into board(TITLE, EMPNO,CONTENT, CATEGORY) value(?,?,?,?)";
+		String query ="insert into board(TITLE, EMPNO, CONTENT, CATEGORY) value(?,?,?,?)";
 		
 		try {
 			con = DBUtil.getConnection();
@@ -35,7 +35,6 @@ public class BoardDAO {
 		}finally{
 			DBUtil.close(con, pstmt);
 		}
-		
 		return result;		
 	}
 	
@@ -154,5 +153,4 @@ public class BoardDAO {
 			return result;
 		}
 
-		
 }

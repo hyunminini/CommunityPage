@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,12 @@ import javax.servlet.http.HttpSession;
 import javax.swing.text.StringContent;
 
 import com.mysql.cj.Session;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import board.BoardDAO;
 import board.BoardDTO;
+import comment.CommentDAO;
+import comment.CommentDTO;
 import emp.EmpDAO;
 
 // boardcon
@@ -43,30 +47,17 @@ public class BoardController extends HttpServlet {
 			write(request, response);
 		}else if(command.equals("read")){
 			read(request, response);
-		}else if(command.equals("delete")){
-			delete(request, response);
 		}else if(command.equals("updateForm")){
 			updateForm(request, response);
 		}else if(command.equals("update")){
 			update(request, response);
 		}else if(command.equals("backDrop")){
 			backDrop(request, response);
+		}else if(command.equals("comment")) {
+			comment(request, response);
 		}
 	}
 	
-	private void backDrop(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		boolean back = true;
-		try {
-			if (back == true) {
-				request.setAttribute("Main", BoardDAO.getAllContents());
-			}
-			request.getRequestDispatcher("Main.jsp").forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void write(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// write.html에서 입력된 값들을 가져온다.
 		String title=request.getParameter("title");
@@ -111,6 +102,63 @@ public class BoardController extends HttpServlet {
 		}
 	}
 	
+	
+	// 댓글
+	private void comment(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String ename=request.getParameter("ename");
+		String co_content=request.getParameter("co_content");	
+		String co_write_date=request.getParameter("co_write_date");
+		Integer empno= Integer.parseInt(request.getParameter("empno"));
+		
+		System.out.println("댓글 작성자: " + ename);
+		System.out.println("댓글 내용: " + co_content);
+		System.out.println("댓글 작성 날짜: " + co_write_date);
+		System.out.println("댓글 작성 사원번호: " + empno);
+		
+		request.setAttribute("empno", empno);
+
+		boolean result = false ;	
+		
+		if(ename == null || ename.trim().length() == 0 ||
+		co_content == null || co_content.trim().length() == 0)
+		
+		{
+			response.sendRedirect("board.do?command=read&board_cnum="+strNum);
+			return;
+		}
+		
+		try {
+			result = CommentDAO.commentInsert(new CommentDTO(ename, co_content, co_write_date, empno));
+			request.setAttribute("Main", BoardDAO.getAllContents());
+			System.out.println("글작성" + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
+		}
+		
+		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
+		// Redirect를 통해 command값이 초기화(?)되어 
+		// list 목록을 불러오는 기능을 수행할 수 있도록 함!
+		if(result){
+			request.getRequestDispatcher("empcon").forward(request, response);
+		}else{
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
+	}
+
+	private void backDrop(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		boolean back = true;
+		try {
+			if (back == true) {
+				request.setAttribute("Main", BoardDAO.getAllContents());
+			}
+			request.getRequestDispatcher("Main.jsp").forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "error.jsp";
 		
@@ -140,8 +188,14 @@ public class BoardController extends HttpServlet {
 		}
 		String url = "error.jsp";
 		BoardDTO gContent = null;
+		
+		ArrayList<CommentDTO> commentList = null;
+		
 		try {
 			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
+			// comment에서 arrayList 값을 불러온다 
+			commentList = CommentDAO.getAllComment(Integer.parseInt(strNum));
+			System.out.println("댓글리스트: " + commentList);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -152,37 +206,13 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("error", "해당 게시글이 존재하지 않습니다");
 		}else{
 			request.setAttribute("resultContent", gContent);
+			// coms => commentList 를 BoardRead.Jsp에 넣어준다.
+			request.setAttribute("coms", commentList);
+			
 			url = "BoardRead.jsp";
 		}
 		request.getRequestDispatcher(url).forward(request, response);
 	}
-	
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String strNum=request.getParameter("board_cnum");
-		String empno = request.getParameter("empno");
-		
-		if(strNum == null || strNum.trim().length() == 0 ||
-			empno == null || empno.trim().length() == 0){
-			response.sendRedirect("board.do");
-			return;				
-		}
-		boolean result = false;
-		try {
-			result = BoardDAO.deleteContent(Integer.parseInt(strNum), Integer.parseInt(empno));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			request.setAttribute("error", "해당 게시글 삭제 실패했습니다. 재 시도 하셔요");
-		}
-		if(result){
-			response.sendRedirect("board.do");			
-			return;
-		}else{
-			request.setAttribute("error", "삭제하려는 게시글이 존재하지 않습니다");
-		}
-		request.getRequestDispatcher("error.jsp").forward(request, response);
-	}
-	
-	
 	
 	// 수정 클릭
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -246,7 +276,6 @@ public class BoardController extends HttpServlet {
 		}
 		request.getRequestDispatcher(url).forward(request, response);
 	}
-
 	
 	
 
