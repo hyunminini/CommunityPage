@@ -1,5 +1,5 @@
 @charset "UTF-8";
-	
+	/* BoardRead */
 	.board-text-flex {
 		display: flex;
 		justify-content: space-between;
@@ -93,7 +93,18 @@
 	}
 	
 	.data-btn {
-		padding-top: 2em;
+		padding-top: 1em;
 	}
+	
+	.upload-wrap {
+		width: 100%;
+		margin-top: 2em;
+		padding: 0.5em 0.3em 0.5em 0.3em;
+		border-bottom: 1px solid #ccc;
+		border-top: 1px solid #ccc;	
+		background: #f0f0f0;		
+	}
+	
+	
 	
 	

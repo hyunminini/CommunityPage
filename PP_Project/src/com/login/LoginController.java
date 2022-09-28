@@ -31,8 +31,7 @@ public class LoginController extends HttpServlet {
 		String pw = null;
 		Integer empno = null;
     	EmpDTO emp = null;
-    	
-
+    
     	request.setAttribute("empno", empno);
     	request.setAttribute("pw", pw);
     	
@@ -48,6 +47,8 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 	
 				session.setAttribute("empno", emp.getEmpno());
+				session.setAttribute("ename", emp.getEname());
+				
 				request.getRequestDispatcher("emp.do").forward(request, response);
 			}else {
 				response.sendRedirect("login.jsp");

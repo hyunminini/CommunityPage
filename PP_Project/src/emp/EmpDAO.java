@@ -17,7 +17,7 @@ public class EmpDAO {
 	
 	
 	public static EmpDTO loginTest(Integer empno, String pw) throws SQLException {
-		return EmpDAO.getEmp(empno, pw);
+		return EmpDAO.getEmp(empno, pw);	
 	}
 	
 
@@ -39,6 +39,7 @@ public class EmpDAO {
 			rset = pstmt.executeQuery();
 			
 			System.out.println(rset);
+			
 			if(rset.next()) {
 				emp = new EmpDTO(rset.getInt(1), rset.getString(3), rset.getString(4), rset.getString(5));
 			}

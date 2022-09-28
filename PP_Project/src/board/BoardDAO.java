@@ -130,6 +130,7 @@ public class BoardDAO {
 			PreparedStatement pstmt = null;
 			boolean result = false;
 			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ?";
+//			String query = "update BOARD b, EMP e set b.TITLE = ?, b.CONTENT = ?, b.CATEGORY = ? where b.board_cnum = ? and e.empno=b.empno";
 			
 			try {
 				con = DBUtil.getConnection();

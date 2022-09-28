@@ -10,6 +10,7 @@ public class BoardDTO {
 	private String write_date;		// 글 작성일
 	private int readnum;			// 글 조회수
 	private String pw;				// 비밀번호
+	private String co_write_date; // 댓글 작성 날
     
 	
 	public BoardDTO(int board_cnum){
@@ -119,6 +120,14 @@ public class BoardDTO {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+	
+	public String getCo_write_date() {
+		return co_write_date;
+	}
+	public void setCo_Write_date(String co_write_date) {
+		this.co_write_date = co_write_date;
+	}
+	
 
 	@Override
 	public String toString() {

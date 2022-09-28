@@ -3,6 +3,7 @@ package board;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.HttpSession;
+
+import comment.CommentDAO;
+import comment.CommentDTO;
 
 
 // boardcon
@@ -22,6 +26,10 @@ public class BoardController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String command = request.getParameter("command"); 
+		
+		HttpSession sesstion = request.getSession();
+		Integer empno = (Integer) sesstion.getAttribute("empno");
+		
 		System.out.println("command " + command);
 		
 		if(command == null){
@@ -42,6 +50,50 @@ public class BoardController extends HttpServlet {
 			update(request, response);
 		}else if(command.equals("backDrop")){
 			backDrop(request, response);
+		}else if(command.equals("comment")) {
+			comment(request, response);
+		}
+	}
+	
+	private void comment(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String ename=request.getParameter("ename");
+		String co_content=request.getParameter("co_content");	
+		String co_write_date=request.getParameter("co_write_date");
+		Integer empno= Integer.parseInt(request.getParameter("empno"));
+		
+		System.out.println("댓글 작성자: " + ename);
+		System.out.println("댓글 내용: " + co_content);
+		System.out.println("댓글 작성 날짜: " + co_write_date);
+		System.out.println("댓글 작성 사원번호: " + empno);
+		
+		request.setAttribute("empno", empno);
+
+		boolean result = false ;	
+		
+		if(ename == null || ename.trim().length() == 0 ||
+		co_content == null || co_content.trim().length() == 0)
+		
+		{
+			response.sendRedirect("board.do?command=read&board_cnum="+strNum);
+			return;
+		}
+		
+		try {
+			result = CommentDAO.commentInsert(new CommentDTO(ename, co_content, co_write_date, empno));
+			request.setAttribute("Main", BoardDAO.getAllContents());
+			System.out.println("글작성" + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
+		}
+		
+		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
+		// Redirect를 통해 command값이 초기화(?)되어 
+		// list 목록을 불러오는 기능을 수행할 수 있도록 함!
+		if(result){
+			request.getRequestDispatcher("empcon").forward(request, response);
+		}else{
+			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}
 	
@@ -83,7 +135,7 @@ public class BoardController extends HttpServlet {
 			return;//write() 메소드 종료
 		}
 		
-		// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
+		// BoardWrite.jsp의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
 		// DAO에 넘겨준다!
 		try {
 			result = BoardDAO.writeContent(new BoardDTO(title, empno, category, content));
@@ -98,8 +150,7 @@ public class BoardController extends HttpServlet {
 		// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
 		
 		if(result){
-			request.getRequestDispatcher("emp.do").forward(request, response);
-			
+			request.getRequestDispatcher("emp.do").forward(request, response);		
 		}else{
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
@@ -107,11 +158,13 @@ public class BoardController extends HttpServlet {
 	
 	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "error.jsp";
-		
 		int empno = Integer.parseInt(request.getParameter("empno"));
 		request.setAttribute("empno", empno);
 		String pw = request.getParameter("pw");
 		request.setAttribute("pw", pw);
+		
+		String ename = request.getParameter("ename");
+		System.out.println("ename:"+ename);
 		
 		try {
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
@@ -127,7 +180,7 @@ public class BoardController extends HttpServlet {
 	
 	private void read(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String strNum=request.getParameter("board_cnum");
-//		System.out.println("read strNum: " + strNum);
+		
 		if(strNum==null || strNum.length() == 0){
 			response.sendRedirect("board.do");
 			return;
@@ -135,9 +188,14 @@ public class BoardController extends HttpServlet {
 		
 		String url = "error.jsp";
 		BoardDTO gContent = null;
+		ArrayList<CommentDTO> commentList = null;
 		
 		try {
 			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
+			// comment에서 arrayList 값을 불러온다 
+			commentList = CommentDAO.getAllComment(Integer.parseInt(strNum));
+			System.out.println("댓글리스트: " + commentList);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 읽기 실패");
@@ -147,6 +205,8 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("error", "해당 게시글이 존재하지 않습니다");
 		}else{
 			request.setAttribute("resultContent", gContent);
+			// coms => commentList 를 BoardRead.Jsp에 넣어준다.
+			request.setAttribute("coms", commentList);
 			url = "boardRead.jsp";
 		}
 		request.getRequestDispatcher(url).forward(request, response);
@@ -188,6 +248,7 @@ public class BoardController extends HttpServlet {
 		String category=request.getParameter("category");
 		Integer empno= Integer.parseInt(request.getParameter("empno"));
 		
+		
 		if( strNum == null || strNum.trim().length() == 0 ||
 			title == null || title.trim().length() == 0 ||
 			content == null || content.trim().length() == 0 ||
@@ -217,7 +278,17 @@ public class BoardController extends HttpServlet {
 	private void updateForm(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException{
 		String strNum = request.getParameter("board_cnum");
 //		System.out.println("수정 FORM strNum: " + strNum);
+		String ename = request.getParameter("ename");
+		HttpSession session = request.getSession(false);
 		
+		if(Objects.nonNull(session)) {			
+			String currentEname = (String)session.getAttribute("ename");
+			if(!ename.equals(currentEname)) {
+				response.sendRedirect("error.jsp");
+				System.out.println("이게뭐야");
+				return;
+			}
+		}		
 		if(strNum == null || strNum.trim().length() == 0) {
 			response.sendRedirect("board.do");
 			return;				

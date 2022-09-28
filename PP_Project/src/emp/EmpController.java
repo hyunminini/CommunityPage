@@ -22,8 +22,7 @@ public class EmpController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
 		
 		Integer empno = Integer.parseInt(request.getParameter("empno"));
-//		request.getParameter("empAll");
-		System.out.println("emp.do"+empno);
+
 		
 		
 		try {
@@ -33,6 +32,7 @@ public class EmpController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("empno", empno);
 				request.setAttribute("Main", BoardDAO.getAllContents());
+//				request.setAttribute("ename", Emp);
 				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
