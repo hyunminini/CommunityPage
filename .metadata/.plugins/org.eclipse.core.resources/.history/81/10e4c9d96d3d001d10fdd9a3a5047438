@@ -1,0 +1,143 @@
+package board;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import board.BoardDAO;
+import board.BoardDTO;
+
+// boardcon
+@WebServlet("/ppProject.do")
+public class BoardController extends HttpServlet {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		String command = request.getParameter("command");
+		
+		if(command == null){
+			command = "main";
+		}		
+		
+		if(command.equals("main")){
+			Main(request, response);
+		}else if(command.equals("write")){
+			write(request, response);
+		}else if(command.equals("read")){
+			read(request, response);
+		}else if(command.equals("delete")){
+			delete(request, response);
+		}
+	}
+
+	private void write(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// write.html�뿉�꽌 �엯�젰�맂 媛믩뱾�쓣 媛��졇�삩�떎.
+		String title=request.getParameter("title");
+		String content=request.getParameter("content");	
+		String category=request.getParameter("category");
+		
+		//�뜲�씠�꽣媛� �엯�젰 �쑀臾대쭔 �쑀�슚�꽦 寃�利�
+		// database�뿉�꽌 �빐�떦 媛믩뱾�� not null濡� 吏����빐二쇱뿀湲� �븣臾몄뿉
+		// �빐�떦 媛믩뱾�씠 null媛믪씠硫� �옱�엯�젰�븷 �닔 �엳�룄濡� write.html濡� Redirect�븿
+		if(title == null || title.trim().length() == 0 ||
+		content == null || content.trim().length() == 0 ||
+		category == null || category.trim().length() == 0 ){
+			response.sendRedirect("write.html");
+			return;//write() 硫붿냼�뱶 醫낅즺
+		}
+		
+		// �엯�젰�씠 �셿猷뚮릺�뿀�뒗吏��뿉 ���븳 寃곌낵瑜� �쓽誘�
+		boolean result = false;
+		
+		// BoardWrite.html�쓽 form�뿉�꽌 �꽆�뼱�삩 �뜲�씠�꽣�뱾濡� BoardDTO媛앹껜瑜� �깮�꽦�빐
+		// DAO�뿉 �꽆寃⑥��떎!
+		try {
+			result = BoardDAO.writeContent(new BoardDTO(title, content, category));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "寃뚯떆湲� ���옣 �떆�룄 �떎�뙣 �옱 �떆�룄 �븯�꽭�슂");
+		}
+		
+		// DAO瑜� �넻�빐 諛섑솚�릺�뼱�삩 result媛믪씠 true硫�, 湲��벐湲�(insert)�셿猷�
+				// Redirect瑜� �넻�빐 command媛믪씠 珥덇린�솕(?)�릺�뼱 list 紐⑸줉�쓣 遺덈윭�삤�뒗 湲곕뒫�쓣 �닔�뻾�븷 �닔 �엳�룄濡� �븿!!
+		if(result){
+			response.sendRedirect("ppProject.do"); 
+		}else{
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
+	}
+	
+	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String url = "error.jsp";
+		try {
+			// DAO�뿉�꽌 諛섑솚�릺�뼱�삩 �쟾泥� �뜲�씠�꽣瑜� request 媛앹껜�뿉 �떞�븘
+			// Main.jsp�뿉�꽌 肉뚮젮二쇰뒗 寃�.
+			request.setAttribute("Main", BoardDAO.getAllContents());
+			url = "main.jsp";
+			System.out.println(request.getRequestDispatcher(url);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "紐⑤몢 蹂닿린 �떎�뙣 �옱 �떎�뻾 �빐 二쇱꽭�슂");
+		}	
+		request.getRequestDispatcher(url).forward(request, response);
+	}
+	
+	private void read(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String strNum=request.getParameter("board_cnum");
+		if(strNum==null || strNum.length() == 0){
+			response.sendRedirect("ppProject.do");
+			return;
+		}
+		String url = "error.jsp";
+		BoardDTO gContent = null;
+		try {
+			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "寃뚯떆湲� �씫湲� �떎�뙣");
+		}
+		
+		if(gContent == null){
+			request.setAttribute("error", "�빐�떦 寃뚯떆湲��씠 議댁옱�븯吏� �븡�뒿�땲�떎");
+		}else{
+			request.setAttribute("resultContent", gContent);
+			url = "BoardRead.jsp";
+		}
+		request.getRequestDispatcher(url).forward(request, response);
+	}
+	
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String strNum=request.getParameter("board_cnum");
+		String empno = request.getParameter("empno");
+		
+		if(strNum == null || strNum.trim().length() == 0 ||
+			empno == null || empno.trim().length() == 0){
+			response.sendRedirect("ppProject.do");
+			return;				
+		}
+		boolean result = false;
+		try {
+			result = BoardDAO.deleteContent(Integer.parseInt(strNum), Integer.parseInt(empno));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("error", "�빐�떦 寃뚯떆湲� �궘�젣 �떎�뙣�뻽�뒿�땲�떎. �옱 �떆�룄 �븯�뀛�슂");
+		}
+		if(result){
+			response.sendRedirect("ppProject.do");			
+			return;
+		}else{
+			request.setAttribute("error", "�궘�젣�븯�젮�뒗 寃뚯떆湲��씠 議댁옱�븯吏� �븡�뒿�땲�떎");
+		}
+		request.getRequestDispatcher("error.jsp").forward(request, response);
+	}
+	
+	
+	
+
+}

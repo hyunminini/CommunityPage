@@ -1,0 +1,137 @@
+package board;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import util.DBUtil;
+
+public class BoardDAO {
+	
+	// 게시물 등록
+	public static boolean writeContent(BoardDTO vo) throws SQLException{
+		Connection con = null;	
+		PreparedStatement pstmt = null;
+		boolean result = false;
+		
+		System.out.println(vo.getEmpno());
+		
+		String query ="insert into board( EMPNO,TITLE,CONTENT, CATEGORY) value(?,?,?,?)";
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			
+
+			
+			pstmt.setInt(1, vo.getEmpno()); 
+			pstmt.setString(2, vo.getTitle());
+	        pstmt.setString(3, vo.getContent());
+	        pstmt.setString(4, vo.getCategory());
+	        
+			int count = pstmt.executeUpdate();			
+			if(count != 0){
+				result = true;
+			}
+		}finally{
+			DBUtil.close(con, pstmt);
+//			DBUtil.close(rset, pstmt, con);
+		}
+		
+		return result;		
+	}
+	
+	// 모든 게시물 조회
+	public static ArrayList<BoardDTO> getAllContents() throws SQLException{
+		Connection con = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<BoardDTO> alist = null;
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC;";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			alist = new ArrayList<BoardDTO>();
+			while(rset.next()){
+				alist.add(new BoardDTO(rset.getInt(1),rset.getString(2),
+						rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(6)
+		 				,rset.getInt(7)));
+			}
+			
+		}finally{
+			DBUtil.close(rset, pstmt, con);
+		}
+		return alist;
+	}
+	
+	// 게시물 읽기 - boolean flag 값 = read인 경우 true, update인 경우  false
+		public static BoardDTO getContent(int board_cnum, boolean flag) throws SQLException{		
+
+			Connection con = null;	
+
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			BoardDTO vo  = null;
+			String query1="update BOARD set READNUM = READNUM+1 where BOARD_CNUM = ?";
+			String query2="select B.TITLE, B.WRITE_DATE, B.CATEGORY, E.ENAME, B.READNUM, B.CONTENT from BOARD B, EMP E where board_cnum = ?";
+			
+			
+			
+			try {
+				con = DBUtil.getConnection();
+				if(flag){
+					pstmt = con.prepareStatement(query1);
+					pstmt.setInt(1, board_cnum);
+					int count = pstmt.executeUpdate();
+					if(count == 0){
+						return vo;
+					}
+				}
+				
+				pstmt = con.prepareStatement(query2);
+				pstmt.setInt(1, board_cnum);	
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()){
+					vo = new BoardDTO(board_cnum,rset.getString(1),
+							rset.getString(2), rset.getString(3), rset.getString(4),
+							rset.getInt(5), rset.getString(6)
+							);
+				}
+				
+			}finally{
+				DBUtil.close(con, pstmt);
+			}
+			return vo;
+		}
+		
+		//게시물 삭제
+		public  static boolean deleteContent(int board_cnum, int empno) throws SQLException{
+			Connection con = null;	
+			PreparedStatement pstmt = null;
+			boolean result = false;
+			
+			String query = "DELETE FROM a USING BOARD as a LEFT JOIN EMP AS b ON a.EMPNO = b.EMPNO where b.EMPNO = 1003";
+			
+			try {
+				con = DBUtil.getConnection();
+				pstmt = con.prepareStatement(query);
+
+				pstmt.setInt(1, board_cnum);
+		        pstmt.setInt(2, empno);
+
+				int count = pstmt.executeUpdate();
+				
+				if(count != 0){
+					result = true;
+				}
+			}finally{
+				DBUtil.close(con, pstmt);
+			}
+			return result;
+		}
+		
+}

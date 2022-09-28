@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\fullstack06\Downloads\CommunityPage-hm\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3050396565.index
+625272022.index
+2100585120.index
+1385943973.index
+1088120517.index
+1927893707.index
+587329111.index

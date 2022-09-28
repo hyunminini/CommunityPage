@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login.jsp</title>
+
+<script>
+    // 유효성 검증 예정
+    window.onload = function() {
+        document.emp.onsubmit = function() {
+        	var empno = document.emp.empno;
+    		var pw = document.emp.pw;
+    		
+            if(!empno.value) {
+                alert("사원번호를 입력하세요")
+                empno.focus();
+                return false;
+            }
+            if(!pw.value) {
+                alert("비밀번호를 입력하세요")
+                pw.focus();
+                return false;
+            }
+        }
+    }
+</script>
+
+</head>
+<body>
+	<h1 align="center">Team PP</h1>
+	<h3 align="center">Bora, Hyunmin, Minuk</h3>
+	<div class="container">
+		<div class="login" align="center" >
+			<form id="loginForm" name="emp" action="empcon" method="post">
+				<label for="empno" class="form-label">사원번호</label>
+				<input type="text" id="empno" name="empno" placeholder="사원번호를 입력하세요"></br><br/>
+				<label for="pw" class="form-label">비밀번호</label>
+				<input type="password" id="pw" name="pw" placeholder="비밀번호"><br/><br/>
+				<button type="submit">로그인</button><br/>
+				
+			</form>
+		</div>
+	</div>
+</body>
+</html>

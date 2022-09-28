@@ -1,0 +1,107 @@
+package emp;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import org.apache.catalina.User;
+
+import util.DBUtil;
+
+public class EmpDAO {
+	
+	private static EmpDAO instance = null;
+	private static ArrayList<EmpDTO> empList = new ArrayList<EmpDTO>();
+	
+	
+	public static EmpDTO loginTest(Integer empno, String pw) throws SQLException {
+		return EmpDAO.getEmp(empno, pw);
+	}
+	
+
+	//로그인 검증
+	public  static EmpDTO getEmp(Integer empno, String pw) throws SQLException {
+		Connection con = null; 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		EmpDTO emp = null;
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("SELECT * FROM EMP WHERE EMPNO=? AND PW =?");
+			pstmt.setInt(1, empno);
+			pstmt.setString(2, pw);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				emp = new EmpDTO(rset.getInt(1), rset.getString(2));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.close(rset, pstmt, con);
+		}
+		return emp;
+	}
+	
+	
+	// ename, 관리자 계정
+	public static EmpDTO getEmpAtho(Integer empno, String ename, String admin_authority) {
+		Connection con = null; 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		EmpDTO emp = null;
+		
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("SELECT EMPNO, FROM EMP WHERE EMPNO=?");
+			pstmt.setInt(1, empno);
+		
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				emp = new EmpDTO(rset.getInt(1), rset.getString(2), rset.getString(3));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.close(rset, pstmt, con);
+		}
+		return emp;
+	}
+
+	
+	
+	
+	//모든 유저 검색
+	private static ArrayList<EmpDTO> empList() throws SQLException{
+				
+		Connection con = null; 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null; 
+		
+		ArrayList<EmpDTO> allData;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("SELECT * FROM USER;");
+			
+			rset = pstmt.executeQuery();
+			
+			allData = new ArrayList<EmpDTO>();
+			while(rset.next()) {
+				allData.add(new EmpDTO(rset.getInt(1),rset.getString(2)));			
+			}
+		
+		} finally {
+			DBUtil.close(rset, pstmt, con);
+		}
+		
+		return allData;		
+	}
+}
+
