@@ -34,13 +34,13 @@
 	<h3 align="center">Bora, Hyunmin, Minuk</h3>
 	<div class="container">
 		<div class="login" align="center" >
-			<form id="loginForm" name="emp" action="ppProject.do" method="post">
-				<label for="empno" class="form-label">아이디</label>
+			<form id="loginForm" name="login" action="login" method="post">
+				<label for="empno" class="form-label">사원번호</label>
 				<input type="text" id="empno" name="empno" placeholder="사원번호를 입력하세요"></br><br/>
 				<label for="pw" class="form-label">비밀번호</label>
 				<input type="password" id="pw" name="pw" placeholder="비밀번호"><br/><br/>
 				<button type="submit">로그인</button><br/>
-				<button type="button"> 사원번호찾기</button><br/>
+				
 			</form>
 		</div>
 	</div>

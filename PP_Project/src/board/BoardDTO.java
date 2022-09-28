@@ -9,17 +9,23 @@ public class BoardDTO {
 	private String content;			// 글 내용
 	private String write_date;		// 글 작성일
 	private int readnum;			// 글 조회수
+	private String pw;				// 비밀번호
     
 	
 	public BoardDTO(int board_cnum){
 		this.board_cnum = board_cnum;
 	}
 	
-	public BoardDTO(String title, String content, String category){
+	public BoardDTO(String title, String content, String category, int empno, String pw){
 		this.title = title;
 		this.content = content;
 		this.category = category;
+		this.empno = empno;
+		this.pw = pw;
 	}
+	
+	
+	
 	
 	// 게시물 보기
 	public BoardDTO(int board_cnum, String title, String write_date, String category, String ename, int readnum, String content) {
@@ -31,12 +37,21 @@ public class BoardDTO {
 		this.content = content;
 	}
 	
-//	public BoardDTO(String title, int empno, String category, String content) {
-//		this.title = title;
-//		this.empno = empno;
-//		this.category = category;
-//		this.content = content;
-//	}
+	// 게시글 작성
+	public BoardDTO(String title, int empno, String category, String content) {
+		this.title = title;
+		this.empno = empno;
+		this.category = category;
+		this.content = content;
+	}
+	
+	// 수정 
+	public BoardDTO( String title, String category, String content, int board_cnum) {
+		this.title = title;
+		this.category = category;
+		this.content = content;
+		this.board_cnum = board_cnum;
+	}
 	
 	// 게시글 리스트
 	public BoardDTO(int board_cnum, String category, String title, int empno, String ename, String write_date, int readnum) {
@@ -48,15 +63,6 @@ public class BoardDTO {
 		this.write_date = write_date;
 		this.readnum = readnum;
 	}
-	
-//	public BoardDTO(int board_cnum, String ename, String write_date, int readnum, String title, String content) {
-//		this.board_cnum = board_cnum;
-//		this.ename = ename;
-//		this.write_date = write_date;
-//		this.readnum = readnum;
-//		this.title = title;
-//		this.content = content;
-//	}
 
 	public String getEname() {
 		return ename;
@@ -106,6 +112,12 @@ public class BoardDTO {
 	}
 	public void setWrite_day(String write_date) {
 		this.write_date = write_date;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 
 	@Override

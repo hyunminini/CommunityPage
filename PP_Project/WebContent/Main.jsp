@@ -31,7 +31,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="Main.jsp">
+			<a class="navbar-brand" href="main.jsp">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -54,14 +54,15 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					관리자페이지 접속
+					사번  ${empno}
+	
 					<span class="caret"></span>
 					</a>
 					
 				<!-- 드랍다운 아이템 영역 -->
 				<ul class="dropdown-menu">
 					<li class="active"> 
-						<a href="Login.jsp">접속하기</a>
+						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
 				</ul>
 			</li>
@@ -119,7 +120,7 @@
 		        
 	     		<td >
 		            <p>
-		           		<a href="empcon?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
 		            </p>
 		        </td>
 
@@ -137,8 +138,15 @@
  	
 
 </table>
-<div class="add-wrap">
-	<a href="BoardWrite.html">글쓰기</a>
+<div class="add-wrap">	
+	<form action="board.do" method="post">
+	
+	<button type="submit"><a href="board.do?command=write&empno=${empno}">글쓰기</a></button>
+	
+	
+	<input type="hidden" name="empno" value="${empno}"></input>
+	
+	</form>
 </div>
 
 <footer>

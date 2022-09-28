@@ -21,12 +21,14 @@ public class EmpDAO {
 	}
 	
 
+	
+
 	//로그인 검증
 	public  static EmpDTO getEmp(Integer empno, String pw) throws SQLException {
 		Connection con = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		EmpDTO emp = null;
+		EmpDTO emp  = null;
 		
 		try {
 			con = DBUtil.getConnection();
@@ -36,8 +38,9 @@ public class EmpDAO {
 			
 			rset = pstmt.executeQuery();
 			
+			System.out.println(rset);
 			if(rset.next()) {
-				emp = new EmpDTO(rset.getInt(1), rset.getString(2));
+				emp = new EmpDTO(rset.getInt(1), rset.getString(3), rset.getString(4), rset.getString(5));
 			}
 
 		} catch (SQLException e) {
@@ -47,6 +50,10 @@ public class EmpDAO {
 		}
 		return emp;
 	}
+	
+	
+	// ename, 관리자 계정
+	
 	
 	//모든 유저 검색
 	private static ArrayList<EmpDTO> empList() throws SQLException{
@@ -66,7 +73,6 @@ public class EmpDAO {
 			while(rset.next()) {
 				allData.add(new EmpDTO(rset.getInt(1),rset.getString(2)));			
 			}
-		
 		} finally {
 			DBUtil.close(rset, pstmt, con);
 		}
