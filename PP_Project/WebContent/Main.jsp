@@ -120,7 +120,7 @@
 		        
 	     		<td >
 		            <p>
-		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}">${data.title}</a>
+		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}&${empno}">${data.title}</a>
 		            </p>
 		        </td>
 

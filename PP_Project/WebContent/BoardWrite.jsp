@@ -22,7 +22,6 @@ function checkValid() {
     return true;
 }
 </script>
-
 </head>
 <body>
 
