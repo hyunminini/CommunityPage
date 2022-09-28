@@ -121,6 +121,7 @@
 			</td>
     	</tr>
 	</table>
+
 	<input type="hidden" name="board_cnum" value="${board_cnum}"></input>
 	<input type="hidden" name="empno" value="${empno}"></input>
 	<div class="btn-wrap">

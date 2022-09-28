@@ -129,12 +129,29 @@ public class BoardDAO {
 			Connection con = null;	
 			PreparedStatement pstmt = null;
 			boolean result = false;
+<<<<<<< HEAD
 			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ?";
 //			String query = "update BOARD b, EMP e set b.TITLE = ?, b.CONTENT = ?, b.CATEGORY = ? where b.board_cnum = ? and e.empno=b.empno";
+=======
+			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ? ";
+>>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 			
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
+<<<<<<< HEAD
+=======
+				pstmt.setString(1, vo.getTitle());
+		        pstmt.setString(2, vo.getContent());
+		        pstmt.setString(3, vo.getCategory());
+		        pstmt.setInt(4, vo.getBoard_cnum());
+		        
+				int count = pstmt.executeUpdate();
+				
+				if(count != 0){
+					result = true;
+				}
+>>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 				
 				pstmt.setString(1, vo.getTitle()); 
 		        pstmt.setString(2, vo.getContent());

@@ -216,8 +216,20 @@ function sendDelete(){
 	</form>	
 	
 	</div>
+<<<<<<< HEAD
 </div>
 		
+=======
+
+	<form id="loginForm" name="emp" action="board.do?command=backDrop" method="post">
+		<button type="submit">목록으로 ></button><br/>
+	</form>
+	
+	</div>
+</div>
+		
+
+>>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 <footer>
 	<div class="max-wrap">
 	
