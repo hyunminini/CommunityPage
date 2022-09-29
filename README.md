@@ -14,6 +14,7 @@
 5. [참고자료](#참고자료)
 
 <br/><br/>
+
 ## Team P.P Members
 [Bora]:https://github.com/Bora0k
 [Hyunmin]:https://github.com/hyunminini
@@ -21,7 +22,8 @@
 
 :smile:[Bora] : :blush:[Hyunmin] : :laughing:[Minuk] 
 
-<br/>
+<br/><br/>
+
 ## 프로젝트 개요
  ### 1. 프로젝트 개요
   - 사원 커뮤니티 게시판 개발
@@ -36,7 +38,7 @@
 | 발표 |  |  |  |  |  |  |  |  |  :white_check_mark:  |
 
 
-
+<br/><br/>
 
 ## 프로젝트 내용
  ### 1.개발환경
@@ -64,7 +66,7 @@
 ![Image](https://user-images.githubusercontent.com/109777144/192931466-3ccee591-3028-4ba3-aced-a3fcba8e0ef7.png)
 ![Image](https://user-images.githubusercontent.com/109777144/192942340-3045a025-93c3-4398-a667-98d1dcbe0ac7.png)
 
-
+<br/><br/>
 
 ## 문제점
  ### 1. 프로젝트 진행
@@ -82,6 +84,8 @@
  + [잘못된 sendRedirect 주소로 데이터 무한 루프] >> AWS 사용 시 주의!
  + [AWS my-sql 사용 시 대소문자 구분]
  + [초기 구조에러로 게시글 수정 삭제시 필요 정보와 session에 포함된 정보 불일치] 
+
+<br/><br/>
 
 ## 향후 계획 및 발전 가능성
  ### 1. 구조 변경
