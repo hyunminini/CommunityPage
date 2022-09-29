@@ -3,7 +3,6 @@ package board;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,17 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.text.StringContent;
 
 import comment.CommentDAO;
 import comment.CommentDTO;
 
-<<<<<<< HEAD
-=======
-import board.BoardDAO;
-import board.BoardDTO;
-import emp.EmpDAO;
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 
 // boardcon
 @WebServlet("/board.do")
@@ -33,31 +25,31 @@ public class BoardController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String command = request.getParameter("command"); 
-		
-		HttpSession sesstion = request.getSession();
-		Integer empno = (Integer) sesstion.getAttribute("empno");
-		
 		System.out.println("command " + command);
+		System.out.println("체크합니다");
+		
+		
 		
 		if(command == null){
 			command = "main";
 		}
 		
 		if(command.equals("main")){
-			Main(request, response);
+			try {
+				Main(request, response);
+			} catch (ServletException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
 		}else if(command.equals("write")){
 			write(request, response);
 		}else if(command.equals("read")){
 			read(request, response);
 		}else if(command.equals("delete")){
-			delete(request, response);
+				delete(request, response);
 		}else if(command.equals("updateForm")){
 			updateForm(request, response);
 		}else if(command.equals("update")){
 			update(request, response);
-		}else if(command.equals("backDrop")){
-			backDrop(request, response);
-<<<<<<< HEAD
 		}else if(command.equals("comment")) {
 			comment(request, response);
 		}
@@ -68,65 +60,82 @@ public class BoardController extends HttpServlet {
 		String co_content=request.getParameter("co_content");	
 		String co_write_date=request.getParameter("co_write_date");
 		Integer empno= Integer.parseInt(request.getParameter("empno"));
+		Integer board_cnum= Integer.parseInt(request.getParameter("board_cnum"));
 		
-		System.out.println("댓글 작성자: " + ename);
-		System.out.println("댓글 내용: " + co_content);
-		System.out.println("댓글 작성 날짜: " + co_write_date);
-		System.out.println("댓글 작성 사원번호: " + empno);
-		
-		request.setAttribute("empno", empno);
-
-		boolean result = false ;	
-		
-		if(ename == null || ename.trim().length() == 0 ||
-		co_content == null || co_content.trim().length() == 0)
-		
-		{
-			response.sendRedirect("board.do?command=read&board_cnum="+strNum);
-			return;
+		int vpage = 0;
+		if(request.getParameter("vpage") == null) {
+			vpage = 1;
+		}else {
+			vpage = Integer.parseInt(request.getParameter("vpage"));
 		}
 		
+		int total;
 		try {
-			result = CommentDAO.commentInsert(new CommentDTO(ename, co_content, co_write_date, empno));
-			request.setAttribute("Main", BoardDAO.getAllContents());
-			System.out.println("글작성" + result);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
-		}
-		
-		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
-		// Redirect를 통해 command값이 초기화(?)되어 
-		// list 목록을 불러오는 기능을 수행할 수 있도록 함!
-		if(result){
-			request.getRequestDispatcher("empcon").forward(request, response);
-		}else{
-			request.getRequestDispatcher("error.jsp").forward(request, response);
-=======
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
+			total = BoardDAO.nextNum();
+			int lastpage = (int)Math.ceil((double)total/10);
+			
+			request.setAttribute("empno", empno);
+			
+			boolean result = false ;	
+			
+			if(ename == null || ename.trim().length() == 0 ||
+					co_content == null || co_content.trim().length() == 0)	{
+				response.sendRedirect("board.do?command=read&board_cnum="+strNum);
+				return;
+			}
+			
+			CommentDTO newComment = null;
+			try {
+				newComment = new CommentDTO(board_cnum, ename, co_content, empno);
+				
+				result = CommentDAO.commentInsert(newComment);
+				request.setAttribute("read", BoardDAO.getAllContents(vpage));
+				request.setAttribute("lastpage", lastpage);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
+			}
+			
+			if(result){
+				response.sendRedirect("board.do?command=read&board_cnum="+board_cnum);
+			}else{
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
 	private void backDrop(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-<<<<<<< HEAD
-		// 
-=======
-		
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 		boolean back = true;
+		int vpage = 0;
+		if(request.getParameter("vpage") == null) {
+			vpage = 1;
+		}else {
+			vpage = Integer.parseInt(request.getParameter("vpage"));
+		}
+		
+		int total;
 		try {
-			if (back == true) {
-				request.setAttribute("Main", BoardDAO.getAllContents());
+			total = BoardDAO.nextNum();
+			int lastpage = (int)Math.ceil((double)total/10);
+			try {
+				if (back == true) {
+					request.setAttribute("Main", BoardDAO.getAllContents(vpage));
+					request.setAttribute("lastpage", lastpage);
+				}
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-<<<<<<< HEAD
-			request.getRequestDispatcher("main.jsp").forward(request, response);
-=======
-			request.getRequestDispatcher("Main.jsp").forward(request, response);
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
+
+	
 
 	private void write(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// write.html에서 입력된 값들을 가져온다.
@@ -137,63 +146,107 @@ public class BoardController extends HttpServlet {
 		
 		request.setAttribute("empno", empno);
 		
+		int vpage = 0;
+		if(request.getParameter("vpage") == null) {
+			vpage = 1;
+		}else {
+			vpage = Integer.parseInt(request.getParameter("vpage"));
+		}
+		
+		int total;
+		try {
+			total = BoardDAO.nextNum();
+			int lastpage = (int)Math.ceil((double)total/10);
+			boolean result = false ;
+			
+			if(title == null || title.trim().length() == 0 ||
+					content == null || content.trim().length() == 0 ||
+					category == null || category.trim().length() == 0)
+				
+			{
+				response.sendRedirect("boardWrite.jsp?empno="+empno);
+				return;//write() 메소드 종료
+			}
+			
+			// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
+			// DAO에 넘겨준다!
+			try {
+				result = BoardDAO.writeContent(new BoardDTO(title, empno, category, content));
+				request.setAttribute("Main", BoardDAO.getAllContents(vpage));
+				request.setAttribute("lastpage", lastpage);
+				request.setAttribute("admin_entity", BoardDAO.getAdminContents());
+			} catch (SQLException e) {
+				e.printStackTrace();
+				request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
+			}
+			
+			// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
+			// Redirect를 통해 command값이 초기화(?)되어 
+			// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
+			
+			if(result){
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+				
+			}else{
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		//데이터값 입력 유무만 유효성 검증
 		// database에서 해당 값들은 not null로 지정해주었기 때문에
 		// 해당 값들이 null값이면 재입력할 수 있도록 write.html로 Redirect함
 		
 		// 입력이 완료되었는지에 대한 결과를 의미
-		boolean result = false ;
-		
-		if(title == null || title.trim().length() == 0 ||
-		content == null || content.trim().length() == 0 ||
-		category == null || category.trim().length() == 0)
-<<<<<<< HEAD
-		
-=======
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
-		{
-			response.sendRedirect("boardWrite.jsp?empno="+empno);
-			return;//write() 메소드 종료
-		}
-		
-<<<<<<< HEAD
-		// BoardWrite.jsp의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
-=======
-		// BoardWrite.html의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
-		// DAO에 넘겨준다!
-		try {
-			result = BoardDAO.writeContent(new BoardDTO(title, empno, category, content));
-			request.setAttribute("Main", BoardDAO.getAllContents());
-		} catch (SQLException e) {
-			e.printStackTrace();
-			request.setAttribute("error", "게시글 저장 시도 실패 재 시도 하세요");
-		}
-		// DAO를 통해 반환되어온 result값이 true면, 글쓰기(insert)완료
-		// Redirect를 통해 command값이 초기화(?)되어 
-		// list 목록을 불러오는 기능을 수행할 수 있도록 함!!
-		
-		if(result){
-			request.getRequestDispatcher("emp.do").forward(request, response);		
-		}else{
-			request.getRequestDispatcher("error.jsp").forward(request, response);
-		}
 	}
 	
-	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void Main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String url = "error.jsp";
-		int empno = Integer.parseInt(request.getParameter("empno"));
+		System.out.println("Main called :");
+		int empno;
+		
+		int vpage = 0;
+		if(request.getParameter("vpage") == null) {
+			vpage = 1;
+		}else {
+			vpage = Integer.parseInt(request.getParameter("vpage"));
+		}
+		
+		int total = BoardDAO.nextNum();
+		int lastpage = (int)Math.ceil((double)total/10);
+		
+		HttpSession session = request.getSession();
+		
+		session.getAttribute("empno");
+
+		empno = Integer.parseInt(String.valueOf(session.getAttribute("empno")));
+		
+		
+		
 		request.setAttribute("empno", empno);
 		String pw = request.getParameter("pw");
 		request.setAttribute("pw", pw);
+		String chkAdmin = BoardDAO.isAdmin(empno).getAdmin_authority();
+		System.out.println("isAdmin? :"+chkAdmin);
 		
-		String ename = request.getParameter("ename");
-		System.out.println("ename:"+ename);
+		switch(chkAdmin) {
+		case "ADMIN":
+			request.setAttribute("Main", BoardDAO.getAllContents4Admin(vpage));
+			request.setAttribute("lastpage", lastpage);
+			break;
+		default:
+			request.setAttribute("Main", BoardDAO.getAllContents(vpage));
+			request.setAttribute("lastpage", lastpage);
+			break;
+		}
 		
 		try {
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
 			// Main.jsp에서 뿌려주는 것.
-			request.setAttribute("Main", BoardDAO.getAllContents());
+			
+			request.setAttribute("admin_entity", BoardDAO.getAdminContents());
 			url = "main.jsp";
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -203,13 +256,8 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private void read(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-<<<<<<< HEAD
 		String strNum=request.getParameter("board_cnum");
-		
-=======
-		strNum = request.getParameter("board_cnum");
-		System.out.println("read strNum: " + strNum);
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
+//		System.out.println("read strNum: " + strNum);
 		if(strNum==null || strNum.length() == 0){
 			response.sendRedirect("board.do");
 			return;
@@ -221,10 +269,7 @@ public class BoardController extends HttpServlet {
 		
 		try {
 			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
-			// comment에서 arrayList 값을 불러온다 
 			commentList = CommentDAO.getAllComment(Integer.parseInt(strNum));
-			System.out.println("댓글리스트: " + commentList);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 읽기 실패");
@@ -234,7 +279,6 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("error", "해당 게시글이 존재하지 않습니다");
 		}else{
 			request.setAttribute("resultContent", gContent);
-			// coms => commentList 를 BoardRead.Jsp에 넣어준다.
 			request.setAttribute("coms", commentList);
 			url = "boardRead.jsp";
 		}
@@ -242,17 +286,16 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String strNum=request.getParameter("board_cnum");
-		String empno = request.getParameter("empno");
 		
-		if(strNum == null || strNum.trim().length() == 0 ||
-			empno == null || empno.trim().length() == 0){
-			response.sendRedirect("board.do");
-			return;				
-		}
+		String strNum=request.getParameter("board_cnum");
+
+		if(strNum == null || strNum.trim().length() == 0 ){
+				response.sendRedirect("board.do");	
+				return;
+			}
 		boolean result = false;
 		try {
-			result = BoardDAO.deleteContent(Integer.parseInt(strNum), Integer.parseInt(empno));
+			result = BoardDAO.deleteContent(Integer.parseInt(strNum));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "해당 게시글 삭제 실패했습니다. 재 시도 하셔요");
@@ -271,42 +314,25 @@ public class BoardController extends HttpServlet {
 	// 수정 클릭
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// write와 유사하게 수정된 데이터를 가져옴.
-		String strNum=request.getParameter("board_cnum");
+		String strNum = request.getParameter("board_cnum");
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");	
 		String category=request.getParameter("category");
 		Integer empno= Integer.parseInt(request.getParameter("empno"));
-		
-<<<<<<< HEAD
 		
 		if( strNum == null || strNum.trim().length() == 0 ||
 			title == null || title.trim().length() == 0 ||
 			content == null || content.trim().length() == 0 ||
 			category == null || category.trim().length() == 0
 		);
-=======
-		if(strNum == null || strNum.trim().length() == 0 ||
-				title == null || title.trim().length() == 0 ||
-				content == null || content.trim().length() == 0 ||
-				category == null || category.trim().length() == 0
-				);
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 		
 		boolean result = false;
 		BoardDTO gContent = null;
 		
 		try {
-<<<<<<< HEAD
 			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아 Main.jsp에서 뿌려주는 것
 			result = BoardDAO.updateContent(new BoardDTO(title, category, content, Integer.parseInt(strNum)));
 			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
-=======
-			// DAO에서 반환되어온 전체 데이터를 request 객체에 담아
-			// Main.jsp에서 뿌려주는 것
-			result = BoardDAO.updateContent(new BoardDTO(title, category, content, Integer.parseInt(strNum)));
-			gContent = BoardDAO.getContent(Integer.parseInt(strNum), true);
-			System.out.println("업데이트 strNum: " + strNum);
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "게시글 수정 실패");
@@ -319,22 +345,11 @@ public class BoardController extends HttpServlet {
 		request.getRequestDispatcher("error.jsp").forward(request, response);
 	}
 	
-	
 	// 수정 form
 	private void updateForm(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException{
 		String strNum = request.getParameter("board_cnum");
 //		System.out.println("수정 FORM strNum: " + strNum);
-		String ename = request.getParameter("ename");
-		HttpSession session = request.getSession(false);
 		
-		if(Objects.nonNull(session)) {			
-			String currentEname = (String)session.getAttribute("ename");
-			if(!ename.equals(currentEname)) {
-				response.sendRedirect("error.jsp");
-				System.out.println("이게뭐야");
-				return;
-			}
-		}		
 		if(strNum == null || strNum.trim().length() == 0) {
 			response.sendRedirect("board.do");
 			return;				

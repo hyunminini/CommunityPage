@@ -36,7 +36,6 @@ public class LoginFilter implements Filter {
 		
 		if(Objects.isNull(session) || Objects.isNull(session.getAttribute("empno"))) {
 			System.out.println("로그인실패");
-//			hpRequest.getRequestDispatcher("login.jsp").forward(hpRequest, hpResponse);
 			hpResponse.sendRedirect("login.jsp");
 			return;
 		}

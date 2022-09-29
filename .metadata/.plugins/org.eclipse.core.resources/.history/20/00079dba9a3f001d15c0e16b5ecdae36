@@ -1,0 +1,211 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width" initial-scal="1">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/layout.css">
+<title>BoardRead.jsp</title>
+<script language=javascript>
+
+function sendUpdate(){
+		document.requestForm.command.value ="updateForm";
+		document.requestForm.submit();
+}	
+
+function likeToggle() {
+	document.requestForm.submit();
+}
+
+
+</script>
+<style>
+	
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<nav class="navbar navbar-default">
+		<!-- 네비게이션 상단 Header  --> 
+		<div class="navnar-header">
+			<button 
+				type="button"
+				class="navbar-toggle collapese"
+				data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<!-- <a class="navbar-brand" href="main.jsp"> -->
+			<a class="navbar-brand" href="board.do?command=backDrop">
+				PP 게시판 웹 사이트
+			</a>			
+		</div>
+		
+		<!-- 메뉴 영역 깃허브 링크 이동 -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="#">강보라</a></li>
+				<li><a href="#">김현민</a></li>
+				<li><a href="#">김민욱</a></li>
+			</ul>		
+		
+			<!-- 메뉴 드랍다운 영역 -->
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#"
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						role="button"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+					사번  ${empno}
+	
+					<span class="caret"></span>
+					</a>
+					
+				<!-- 드랍다운 아이템 영역 -->
+				<ul class="dropdown-menu">
+				
+					<c:choose>
+						<c:when test="${sessionScope.empno == 1001}">
+							<li class="active"> 
+								<a href="logoutAction.jsp">관리자 페이지 이동</a>
+							</li>
+							<li> 
+								<a href="logoutAction.jsp">로그아웃</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="active"> 
+								<a href="logoutAction.jsp">로그아웃</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>
+	<!-- 메인 이미지 -->
+<div class="mainImg"></div>
+
+<div class="board-wrap">
+	<div class="max-wrap">
+		<div class="read-title">
+			
+			<p><span>${requestScope.resultContent.category}</span> ${requestScope.resultContent.title}</p>
+            <p>${requestScope.resultContent.write_date}</p>
+    	</div>
+		<div class="read-conwrap">
+			<p class="ename">${requestScope.resultContent.ename}</p>
+			
+			<ul class="read-con">
+				<li>조회: ${requestScope.resultContent.readnum} </li>
+				<li>좋아요: </li>
+				<li>댓글: </li>
+			</ul>
+		</div>    
+		
+		<div class="board">
+			${requestScope.resultContent.content}
+		</div>	
+		
+		
+	<!-- 좋아요 눌럿는지 안눌럿는지 -->
+<%-- 	<select id="findLike" resultType="int">
+		select count(*) from vegan_like where board_no = #{board_cnum} and user_no = #{user_no}
+	</select> --%>
+	
+	<div class="btn-wrap">
+		<button onClick="likeToggle()">좋아요: </button>
+		<button>신고</button>
+	</div>
+	
+	<div class="upload-wrap">
+		<div class="upload-fail">업로드 파일:</div> 
+	</div>
+     	
+    <% String board_cnum = (String) request.getParameter("board_cnum"); %>
+    <div class="data-btn">
+    	<form name="requestForm" method=post action="board.do?command=updateForm&board_cnum=<%=board_cnum %>">
+			<input type=hidden name=board_cnum value="${requestScope.resultContent.board_cnum}">
+			<input type=hidden name="command" value="read">
+			<input type="hidden" name="title" value="${requestScope.resultContent.title}">
+			<input type="hidden" name="content" value="${requestScope.resultContent.content}">
+			<input type="hidden" name="ename" value="${requestScope.resultContent.ename}">
+			<c:choose>
+				<c:when test="${sessionScope.empno == 1001}">
+					<input type=button value="수정하기" onClick="sendUpdate()">
+				</c:when>
+				<c:when test="${sessionScope.empno == param.empno}">
+					<input type=button value="수정하기" onClick="sendUpdate()">
+				</c:when>
+				<c:otherwise>
+					
+				</c:otherwise>
+			</c:choose>
+		</form>
+	</div>
+		<form method="post" action="board.do?command=delete&board_cnum=<%=board_cnum %>">
+			<button type="submit">삭제하기</button>
+			<input type=hidden name="command" value="delete" />
+			<input type=hidden name="empno" value="${empno}"/>
+			<input type="hidden" name="board_cnum" value="<%=board_cnum %>" />
+		</form>
+		<a href="board.do" onclick="javascript:history.go(-1)">목록으로 </a><br/>
+	</div>
+	
+		<c:forEach items="${requestScope.coms}" var ="data">
+		<div class="comment-wrap">
+			<div class="in-content">
+				<div>
+					<h3>${data.ename} <span>${data.co_write_date}</span></h3>
+				</div>
+				<div>
+					<form class="in-btn">
+						<button onClick="commentDelete()">삭제하기</button>
+						<button onClick="commentDelete()">수정하기</button>
+						<button>신고하기</button>
+					</form>
+				</div>
+			</div>
+			
+			<p>${data.co_content}</p>
+		</div>
+	</c:forEach>
+	
+	<div class="comment-add">
+		<p>댓글 작성</p>
+	</div>
+	<div class="add-wrap">
+	<form action="board.do" method="post">
+		<input type="hidden" name="command" value="comment">
+		<input type="hidden" name="empno"  value="${empno}">
+		<input type="hidden" name="ename" value="${requestScope.resultContent.ename}">
+		<input type="hidden" name="board_cnum" value="${param.board_cnum}"></input> 
+		<textarea class="comment" name="co_content" cols="50" rows="10"></textarea>
+		<input id="add" type="submit" value="등록">
+	</form>	
+	<div>
+	
+	</div>
+	</div>
+</div>
+<footer>
+	<div class="max-wrap">
+	
+	</div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+</body>
+</html>

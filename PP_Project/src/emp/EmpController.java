@@ -22,18 +22,26 @@ public class EmpController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
 		
 		Integer empno = Integer.parseInt(request.getParameter("empno"));
-
+		System.out.println("emp.do"+empno);
 		
 		
 		try {
 			empno = Integer.parseInt(request.getParameter("empno"));		
 			
+			int vpage = 0;
+			int total = BoardDAO.nextNum();
+			int lastpage = (int)Math.ceil((double)total/10);
+
+			request.setAttribute("lastpage", lastpage);
+			if(request.getParameter("vpage") == null) {
+				vpage = 1;
+			}
 			if (empno !=null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("empno", empno);
-				request.setAttribute("Main", BoardDAO.getAllContents());
-//				request.setAttribute("ename", Emp);
-				request.getRequestDispatcher("main.jsp").forward(request, response);
+				request.setAttribute("Main", BoardDAO.getAllContents(vpage));
+				request.setAttribute("admin_entity", BoardDAO.getAdminContents());
+				request.getRequestDispatcher("board.do").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
