@@ -82,8 +82,9 @@
  
  + [DB 초기 설정]
  + [잘못된 sendRedirect 주소로 데이터 무한 루프] >> AWS 사용 시 주의!
- + [AWS my-sql 사용 시 대소문자 구분] 대문자로 통일하여 해결
-  - 처음 DB를 생성 할 때 부터 lower_case_table_names = 1으로 설정된 파라미터 그룹을 사용하면 MySQL 8 RDS에서도 테이블 조회시 대소문자 구분 잘 된다!
+ + [AWS my-sql 사용 시 대소문자 구분]
+    대문자로 통일하여 해결
+    처음 DB를 생성 할 때 부터 lower_case_table_names = 1으로 설정된 파라미터 그룹을 사용하면 MySQL 8 RDS에서도 테이블 조회시 대소문자 구분 잘 된다!
 
  
 
