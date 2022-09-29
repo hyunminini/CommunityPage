@@ -63,12 +63,12 @@
  
  ### 2. 프로젝트 내부 오류
  [DB 초기 설정]:https://github.com/hyunminini/CommunityPage/issues/41
+ [잘못된 sendRedirect 주소로 데이터 무한 루프 ]:https://github.com/hyunminini/CommunityPage/issues/39
  
  
  + DB 초기 설정
  + 잘못된 sendRedirect 주소로 데이터 무한 루프 
-  + git 사용 미숙ㅈㅓ장
-  + git 사용 미숙
+ +
 
 ------------------
 참고사이트
