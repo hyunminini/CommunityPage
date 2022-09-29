@@ -9,9 +9,9 @@
 0. [Team P.P Members](#team-p.p-members)
 1. [프로젝트 개요](#프로젝트-개요)
 2. [프로젝트 내용](#프로젝트-내용)
-3. [Problem that Occurred - 문제점](#problem-that-occurred---문제점)
-4. [Future Plans - 향후 계획 및 발전 가능성](#future-plans---향후-계획-및-발전-가능성)
-5. [References - 참고자료](#references---참고자료)
+3. [문제점](#문제점)
+4. [향후 계획 및 발전 가능성](#향후-계획-및-발전-가능성)
+5. [참고자료](#참고자료)
 
 <br/><br/>
 ## Team P.P Members
@@ -48,14 +48,14 @@
 
 ### 2. 프로젝트 레이아웃 및 기본 기능
  [피그마 사용]:https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
- - 레이아웃 >> [피그마 사용]
- - 기능
+- 레이아웃 >> [피그마 사용]
+- 기능
   - 사원 게시판 >> 카테고리별 등록
   - 댓글
   - 페이지네이션
   - 관리자페이지
 
- + 데이터베이스 구조
+- 데이터베이스 구조
 ![Image](https://user-images.githubusercontent.com/109777144/192930104-521b9b3d-f18f-40fd-ab72-9533f52e0f70.png)
 ![Image](https://user-images.githubusercontent.com/109777144/192930840-96ec80cb-fe55-437c-8231-548b646300cf.png)
 ![Image](https://user-images.githubusercontent.com/109777144/192931015-68fcdc38-da59-4cd0-941a-e5eaf165869f.png)
@@ -76,17 +76,39 @@
  ### 2. 프로젝트 내부 오류
  [DB 초기 설정]:https://github.com/hyunminini/CommunityPage/issues/41
  [잘못된 sendRedirect 주소로 데이터 무한 루프]:https://github.com/hyunminini/CommunityPage/issues/39
- 
+ [AWS my-sql 사용 시 대소문자 구분]:https://github.com/hyunminini/CommunityPage/issues/11
+ [초기 구조에러로 게시글 수정 삭제시 필요 정보와 session에 포함된 정보 불일치]:https://github.com/hyunminini/CommunityPage/issues/40
  
  + [DB 초기 설정]
- + [잘못된 sendRedirect 주소로 데이터 무한 루프]
- +
+ + [잘못된 sendRedirect 주소로 데이터 무한 루프] >> AWS 사용 시 주의!
+ + [AWS my-sql 사용 시 대소문자 구분]
+ + [초기 구조에러로 게시글 수정 삭제시 필요 정보와 session에 포함된 정보 불일치] 
+
+## 향후 계획 및 발전 가능성
+ ### 1. 구조 변경
+ - 코드리뷰를 통해 효율적인 구조 변경 및 중복 코드 통합,삭제
+ - Spring Framewrok 사용
+ 
+ <br/>
+  ### 2. 추가 기능
+  - 파일업로드(확장자 필터링)
+  - 좋아요, 신고기능
+  - 관리자 페이지 >> 사원 계정 정지
+  - Session timeout, security
+  - 맛집 API 추가 >> [부산 맛집정보 서비스]
+  - AWS 배포
+  [부산 맛집정보 서비스]:https://www.data.go.kr/data/15063472/openapi.do
+  <br/>
+  
 
 ------------------
-참고사이트
-https://useegod.com/2021/11/20/git_readme/
+## [참고자료]
+[https://useegod.com/2021/11/20/git_readme/
 https://www.google.com/search?newwindow=1&q=README+%ED%85%9C%ED%94%8C%EB%A6%BF&sa=X&ved=2ahUKEwjVgYf0yrn6AhWIdd4KHaGEB1QQ1QJ6BAgiEAE&biw=1023&bih=936&dpr=1
-https://www.google.com/search?newwindow=1&lei=elY1Y-DOK5nChwPcubC4BA&q=GitHub%20README%20%ED%85%9C%ED%94%8C%EB%A6%BF&ved=2ahUKEwjg88f2ybn6AhUZ4WEKHdwcDEcQsKwBKAB6BAhFEAE&biw=1920&bih=937&dpr=1
+https://www.google.com/search?newwindow=1&lei=elY1Y-DOK5nChwPcubC4BA&q=GitHub%20README%20%ED%85%9C%ED%94%8C%EB%A6%BF&ved=2ahUKEwjg88f2ybn6AhUZ4WEKHdwcDEcQsKwBKAB6BAhFEAE&biw=1920&bih=937&dpr=1](http://yoonbumtae.com/?p=2957
+https://drsggg.tistory.com/222
+https://cbts.tistory.com/m/294
+https://beaniejoy.tistory.com/25)
 
 
 
