@@ -6,7 +6,7 @@
 
 ### Contents
 
-0. [Team Members](#team-p.p-members)
+0. [Team P.P Members](#team-p.p-members)
 1. [프로젝트 개요](#프로젝트-개요)
 2. [프로젝트 내용](#프로젝트-내용)
 3. [Problem that Occurred - 문제점](#problem-that-occurred---문제점)
@@ -40,20 +40,31 @@
 
 
 ## 프로젝트 내용
- ### 1. 프로젝트 레이아웃 및 기본 기능
- + 레이아웃 >> 피그마 사용
-  + https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
- + 기능
-  + 사원 게시판 >> 카테고리별 등록
-  + 댓글
-  + 페이지네이션
-  + 관리자페이지
-
- ### 2.개발환경
+ ### 1.개발환경
 
 | JavaScript | Java |  Apache   |  MySQL   |
 | :--------: | :--------: | :------: | :-----: |
 |   ![js]    |   ![Java]    | ![Apache] | ![MySQL] |
+
+### 2. 프로젝트 레이아웃 및 기본 기능
+ [피그마 사용]:https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
+ + 레이아웃 >> [피그마 사용]
+  + 기능
+  + 사원 게시판 >> 카테고리별 등록
+  + 댓글
+  + 페이지네이션
+  + 관리자페이지
+ + 데이터베이스 구조
+![Image](https://user-images.githubusercontent.com/109777144/192930104-521b9b3d-f18f-40fd-ab72-9533f52e0f70.png)
+![Image](https://user-images.githubusercontent.com/109777144/192930840-96ec80cb-fe55-437c-8231-548b646300cf.png)
+![Image](https://user-images.githubusercontent.com/109777144/192931015-68fcdc38-da59-4cd0-941a-e5eaf165869f.png)
+![Image](https://user-images.githubusercontent.com/109777144/192931338-ceddc402-413c-43fe-b7a1-6fae4574afe5.png)
+![Image](https://user-images.githubusercontent.com/109777144/192931257-aa6e2ada-dd1a-4295-bace-da07eaf03b70.png)
+![Image](https://user-images.githubusercontent.com/109777144/192931428-b87f40e7-5f49-4913-93e3-98ff7e3e6785.png)
+![Image](https://user-images.githubusercontent.com/109777144/192931466-3ccee591-3028-4ba3-aced-a3fcba8e0ef7.png)
+![Image](https://user-images.githubusercontent.com/109777144/192942340-3045a025-93c3-4398-a667-98d1dcbe0ac7.png)
+
+
 
 ## 문제점
  ### 1. 프로젝트 진행
@@ -63,11 +74,11 @@
  
  ### 2. 프로젝트 내부 오류
  [DB 초기 설정]:https://github.com/hyunminini/CommunityPage/issues/41
- [잘못된 sendRedirect 주소로 데이터 무한 루프 ]:https://github.com/hyunminini/CommunityPage/issues/39
+ [잘못된 sendRedirect 주소로 데이터 무한 루프]:https://github.com/hyunminini/CommunityPage/issues/39
  
  
- + DB 초기 설정
- + 잘못된 sendRedirect 주소로 데이터 무한 루프 
+ + [DB 초기 설정]
+ + [잘못된 sendRedirect 주소로 데이터 무한 루프]
  +
 
 ------------------
