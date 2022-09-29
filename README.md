@@ -19,7 +19,7 @@
 [Hyunmin]:https://github.com/hyunminini
 [Minuk]:https://github.com/poviea
 
-:smile:[Bora] : :blush:[Hyunmin] : :laughing:[Minuk] : 
+:smile:[Bora] : :blush:[Hyunmin] : :laughing:[Minuk] 
 
 <br/><br/>
 ## 프로젝트 개요
