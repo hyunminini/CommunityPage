@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import emp.EmpDTO;
 import util.DBUtil;
 
 public class BoardDAO {
@@ -38,12 +39,66 @@ public class BoardDAO {
 	}
 	
 	// 모든 게시물 조회
-	public static ArrayList<BoardDTO> getAllContents() throws SQLException{
+	public static ArrayList<BoardDTO> getAllContents(int pageNumber) throws SQLException{
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<BoardDTO> alist = null;
-		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC;";
+		
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO and B.DEL_YN = 'N' ORDER BY BOARD_CNUM DESC LIMIT ?, ?;";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
+			pstmt.setInt(2, 10);
+			rset = pstmt.executeQuery();
+			alist = new ArrayList<BoardDTO>();
+			while(rset.next()){
+				alist.add(new BoardDTO(rset.getInt(1),rset.getString(2),
+						rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(6)
+		 				,rset.getInt(7)));
+			}
+			
+		}finally{
+			DBUtil.close(rset, pstmt, con);
+		}
+		return alist;
+	}
+	
+	// 모든 게시물 조회(어드민)
+	public static ArrayList<BoardDTO> getAllContents4Admin(int pageNumber) throws SQLException{
+		Connection con = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<BoardDTO> alist = null;
+		
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY BOARD_CNUM DESC LIMIT ?, ?;";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
+			pstmt.setInt(2, 10);
+			rset = pstmt.executeQuery();
+			alist = new ArrayList<BoardDTO>();
+			while(rset.next()){
+				alist.add(new BoardDTO(rset.getInt(1),rset.getString(2),
+						rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(6)
+		 				,rset.getInt(7)));
+			}
+			
+		}finally{
+			DBUtil.close(rset, pstmt, con);
+		}
+		return alist;
+	}
+	
+	// 공지사항 게시물 조회
+	public static ArrayList<BoardDTO> getAdminContents() throws SQLException{
+		Connection con = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<BoardDTO> alist = null;
+		String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, E.ADMIN_AUTHORITY, B.WRITE_DATE, B.READNUM from BOARD B, EMP E where B.DEL_YN = 'N' and E.EMPNO = B.EMPNO and E.ADMIN_AUTHORITY = 'ADMIN' order by BOARD_CNUM desc;";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -51,8 +106,8 @@ public class BoardDAO {
 			alist = new ArrayList<BoardDTO>();
 			while(rset.next()){
 				alist.add(new BoardDTO(rset.getInt(1),rset.getString(2),
-						rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(6)
-		 				,rset.getInt(7)));
+						rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(7)
+		 				,rset.getInt(8)));
 			}
 			
 		}finally{
@@ -91,6 +146,7 @@ public class BoardDAO {
 							rset.getString(2), rset.getString(3), rset.getString(4),
 							rset.getInt(5), rset.getString(6)
 							);
+//					vo.setBoard_cnum(board_cnum);  현민이형 돼있음
 				}
 			}finally{
 				DBUtil.close(rset, pstmt, con);
@@ -99,19 +155,18 @@ public class BoardDAO {
 		}
 		
 		//게시물 삭제
-		public  static boolean deleteContent(int board_cnum, int empno) throws SQLException{
+		public  static boolean deleteContent(int board_cnum) throws SQLException{
 			Connection con = null;	
 			PreparedStatement pstmt = null;
 			boolean result = false;
 			
-			String query = "DELETE FROM a USING BOARD as a LEFT JOIN EMP AS b ON a.EMPNO = b.EMPNO where b.EMPNO = ?";
+			String query = "update board set del_yn='Y' where BOARD_CNUM = ?";
 			
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
 
 				pstmt.setInt(1, board_cnum);
-		        pstmt.setInt(2, empno);
 
 				int count = pstmt.executeUpdate();
 				
@@ -129,29 +184,11 @@ public class BoardDAO {
 			Connection con = null;	
 			PreparedStatement pstmt = null;
 			boolean result = false;
-<<<<<<< HEAD
 			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ?";
-//			String query = "update BOARD b, EMP e set b.TITLE = ?, b.CONTENT = ?, b.CATEGORY = ? where b.board_cnum = ? and e.empno=b.empno";
-=======
-			String query = "update board set TITLE = ?, CONTENT = ?, CATEGORY = ? where board_cnum = ? ";
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 			
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
-<<<<<<< HEAD
-=======
-				pstmt.setString(1, vo.getTitle());
-		        pstmt.setString(2, vo.getContent());
-		        pstmt.setString(3, vo.getCategory());
-		        pstmt.setInt(4, vo.getBoard_cnum());
-		        
-				int count = pstmt.executeUpdate();
-				
-				if(count != 0){
-					result = true;
-				}
->>>>>>> 27b648f4fee3ed0ffcd3b0758c8a252d07d8b38e
 				
 				pstmt.setString(1, vo.getTitle()); 
 		        pstmt.setString(2, vo.getContent());
@@ -167,5 +204,56 @@ public class BoardDAO {
 				DBUtil.close(con, pstmt);
 			}
 			return result;
+		}
+
+		public  static EmpDTO isAdmin(Integer empno) throws SQLException {
+			Connection con = null; 
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			EmpDTO emp  = null;
+			
+			try {
+				con = DBUtil.getConnection();
+				pstmt = con.prepareStatement("SELECT * FROM EMP WHERE EMPNO=?");
+				pstmt.setInt(1, empno);
+				
+				rset = pstmt.executeQuery();
+				
+				System.out.println("민욱" +  rset);
+				if(rset.next()) {
+					emp = new EmpDTO(rset.getInt(1), rset.getString(3), rset.getString(4), rset.getString(5));
+				}
+				
+				System.out.println("민욱2" + emp);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				DBUtil.close(rset, pstmt, con);
+			}
+			return emp;
+		}
+		
+		public  static int nextNum() throws SQLException{
+			Connection con = null;	
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			int total = 0;
+			String sqlTot = "SELECT COUNT(*) TOTAL FROM BOARD";
+			
+			
+			try {
+				con = DBUtil.getConnection();
+				pstmt = con.prepareStatement(sqlTot);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					total = rset.getInt("total");
+					return total;
+				}
+			}finally{
+				DBUtil.close(con, pstmt);
+			}
+			return 0;
 		}
 }

@@ -31,7 +31,9 @@ public class LoginController extends HttpServlet {
 		String pw = null;
 		Integer empno = null;
     	EmpDTO emp = null;
-    
+    	System.out.println(request.getParameter("empno"));
+    	
+
     	request.setAttribute("empno", empno);
     	request.setAttribute("pw", pw);
     	
@@ -40,15 +42,13 @@ public class LoginController extends HttpServlet {
 			empno = Integer.parseInt(request.getParameter("empno"));
 			emp = EmpDAO.loginTest(empno, pw);
 			
-			System.out.println(emp);
+			System.out.println("login emp : " + emp);
 			
 			
 			if (emp !=null) {
 				HttpSession session = request.getSession();
-	
+				System.out.println("session emp : " + emp.getEmpno());
 				session.setAttribute("empno", emp.getEmpno());
-				session.setAttribute("ename", emp.getEname());
-				
 				request.getRequestDispatcher("emp.do").forward(request, response);
 			}else {
 				response.sendRedirect("login.jsp");
