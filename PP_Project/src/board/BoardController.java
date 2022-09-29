@@ -264,7 +264,7 @@ public class BoardController extends HttpServlet {
 		if(Objects.nonNull(session)) {			
 			String currentEname = (String)session.getAttribute("ename");
 			if(!ename.equals(currentEname)) {
-				response.sendRedirect("error.jsp");
+				response.sendRedirect("updateError.jsp");
 				return;
 			}
 		}		
@@ -272,7 +272,7 @@ public class BoardController extends HttpServlet {
 			response.sendRedirect("board.do");
 			return;				
 		}
-		String url = "error.jsp";
+		String url = "updateError.jsp";
 		BoardDTO gContent = null;
 		try {
 			gContent = BoardDAO.getContent(Integer.parseInt(strNum), false);

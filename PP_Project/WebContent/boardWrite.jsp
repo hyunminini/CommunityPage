@@ -16,6 +16,17 @@
 	border: 1px solid #ccc;
 	text-decoration: none;
 }
+
+footer {
+	height: auto;
+	background: none;
+}
+
+.ft-wrap {
+	border-top: 1px solid #ccc;
+	text-align: center;
+	padding: 2em 0em 2em 0em;
+}
 </style>
 
 <script language=javascript>
@@ -59,9 +70,9 @@ function checkValid() {
 		<!-- 메뉴 영역 깃허브 링크 이동 -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="#">강보라</a></li>
-				<li><a href="#">김현민</a></li>
-				<li><a href="#">김민욱</a></li>
+				<li><a href="https://github.com/Bora0k" target="_blacnk">강보라</a></li>
+				<li><a href="https://github.com/hyunminini" target="_blacnk">김현민</a></li>
+				<li><a href="https://github.com/poviea" target="_blacnk">김민욱</a></li>
 			</ul>		
 		
 			<!-- 메뉴 드랍다운 영역 -->
@@ -141,7 +152,11 @@ function checkValid() {
 
 <footer>
 	<div class="max-wrap">
-	
+		<div class="ft-wrap">
+			<h3>PP_Project</h3>
+			<p>Team: Bora0k, hyunminini, poviea</p>
+			<p>©2022 Java Mini Project</p>
+		</div>
 	</div>
 </footer>
 
