@@ -15,9 +15,11 @@
 
 <br/><br/>
 ## Team P.P Members
-:smile:Bora : https://github.com/Bora0k<br/>
-:blush:Hyunmin : https://github.com/hyunminini<br/>
-:laughing:Minuk : https://github.com/poviea
+[Bora]:https://github.com/Bora0k
+[Hyunmin]:https://github.com/hyunminini
+[Minuk]:https://github.com/poviea
+
+:smile:[Bora] : :blush:[Hyunmin] : :laughing:[Minuk] : 
 
 <br/><br/>
 ## 프로젝트 개요
@@ -91,24 +93,19 @@
  
  <br/>
   ### 2. 추가 기능
+  [부산 맛집정보 서비스]:https://www.data.go.kr/data/15063472/openapi.do
   - 파일업로드(확장자 필터링)
   - 좋아요, 신고기능
   - 관리자 페이지 >> 사원 계정 정지
   - Session timeout, security
   - 맛집 API 추가 >> [부산 맛집정보 서비스]
   - AWS 배포
-  [부산 맛집정보 서비스]:https://www.data.go.kr/data/15063472/openapi.do
-  <br/>
+
   
 
 ------------------
 ## [참고자료]
-[https://useegod.com/2021/11/20/git_readme/
-https://www.google.com/search?newwindow=1&q=README+%ED%85%9C%ED%94%8C%EB%A6%BF&sa=X&ved=2ahUKEwjVgYf0yrn6AhWIdd4KHaGEB1QQ1QJ6BAgiEAE&biw=1023&bih=936&dpr=1
-https://www.google.com/search?newwindow=1&lei=elY1Y-DOK5nChwPcubC4BA&q=GitHub%20README%20%ED%85%9C%ED%94%8C%EB%A6%BF&ved=2ahUKEwjg88f2ybn6AhUZ4WEKHdwcDEcQsKwBKAB6BAhFEAE&biw=1920&bih=937&dpr=1](http://yoonbumtae.com/?p=2957
-https://drsggg.tistory.com/222
-https://cbts.tistory.com/m/294
-https://beaniejoy.tistory.com/25)
+|
 
 
 
