@@ -50,7 +50,14 @@ public class BoardController extends HttpServlet {
 			backDrop(request, response);
 		}else if(command.equals("comment")) {
 			comment(request, response);
+		}else if(command.equals("lank")) {
+			lank(request, response);
 		}
+	}
+	
+	private void lank(HttpServletRequest request, HttpServletResponse response) {
+		String ename=request.getParameter("ename");
+		
 	}
 	
 	private void comment(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

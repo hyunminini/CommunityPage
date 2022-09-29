@@ -23,6 +23,10 @@ footer {
 	padding: 2em 0em 2em 0em;
 }
 
+.max-wrap {
+	max-width: 1000px;
+}
+
 </style>
 
 </head>

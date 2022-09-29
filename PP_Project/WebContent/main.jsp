@@ -158,7 +158,6 @@ footer {
 		            <p>${data.category}</p>
 		        </td>
 		        
-		        
 	     		<td >
 		            <p>
 		           		<a href="board.do?command=read&board_cnum=${data.board_cnum}&empno=${empno}">${data.title}</a>
@@ -185,8 +184,6 @@ footer {
 	</form>
 </div>
 </div>
-
-
 
 <footer>
 	<div class="max-wrap">

@@ -103,6 +103,27 @@ h3 {
 #loginForm > button:active {
 	background: #E00000;
 }
+
+.move-page {
+	margin: 0;
+	background: #D81919;
+	width: 100%;
+	height: 2.5em;
+	border-radius: 0.5em;
+	border: none;
+	color: #fff;
+	font-size: 1em;
+	padding: 2px;
+	cursor: pointer;
+}
+
+.move-page a {
+	line-height: 42px;
+	text-decoration: none;
+	color: #fff; 
+	display: block;
+	width: 100%;   
+}
 	
 </style>
 
@@ -116,9 +137,12 @@ h3 {
 			<form id="loginForm" name="login" action="login" method="post">
 				<input type="text" id="empno" name="empno" placeholder="사원번호를 입력하세요"></br><br/>
 				<input type="password" id="pw" name="pw" placeholder="비밀번호를 입력하세요"><br/><br/>
-				<button type="submit">로그인</button><br/>
+				<button type="submit">사원 로그인</button><br/><br />
 			</form>
-		</div>
+				<div class="move-page">
+				<a href="ppHomepage.jsp">회사 홈페이지 이동</a>
+				</div>
+			</div>
 	</div>
 	</div>
 </body>

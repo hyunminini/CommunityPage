@@ -151,45 +151,4 @@ public class BoardDAO {
 			return result;
 		}
 		
-		//좋아요 업데이트	
-//		int like_count;
-//		public void update_Like(int bno){		
-//			String query = "update LIKE_TBL set LIKE_COUNT = LIKE_COUNT+1 where EMPNO = EMPNO AND BOARD_CNUM = ?";	
-//			System.out.println(query);
-//			Connection conn = null;		
-//			PreparedStatement pstmt = null;			
-//			try{ conn = DBUtil.getConnection();		
-//				pstmt = conn.prepareStatement(query); 				
-//				pstmt.setInt(1,bno);
-//				pstmt.setInt(2, like_count);
-//				pstmt.executeUpdate();		
-//			}catch(SQLException e){			
-//				e.printStackTrace();		
-//				}finally {			
-//					DBUtil.close(conn, pstmt);		
-//				}		
-//			}
-		
-		//좋아요 개수 찾기	
-//		public int select_Like(int board_cnum){		
-//			String query = "select LIKE_COUNT from LIKE_TBL";
-//			Connection conn = null;	
-//			PreparedStatement pstmt = null;	
-//			ResultSet rset = null;		
-//			int like=0;		
-//			try{ conn = DBUtil.getConnection();	
-//				 pstmt = conn.prepareStatement(query);  // '?'바인드를 사용해서 sql문을 효과 적으로 사용할수있음
-//			  	 pstmt.setInt(1,board_cnum);			
-//			  	 rset = pstmt.executeQuery();					
-//			  	 if(rset.next()){				
-//			  		 like = rset.getInt("like_count");		
-//			  	 }}catch(SQLException e){	
-//			  		 e.printStackTrace();		
-//			  	   }finally {			
-//			  		   DBUtil.close(rset, pstmt, conn);		
-//			  	   }		
-//			return like;	
-//		}
-//		
-		
 }
