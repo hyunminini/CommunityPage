@@ -43,9 +43,9 @@
 ## 프로젝트 내용
  ### 1.개발환경
 
-| JavaScript | Java |  Apache   |  MySQL   |
+| JSP | Java |  Apache   |  MySQL   |
 | :--------: | :--------: | :------: | :-----: |
-|   ![js]    |   ![Java]    | ![Apache] | ![MySQL] |
+|   ![jsp]    |   ![Java]    | ![Apache] | ![MySQL] |
 
 ### 2. 프로젝트 레이아웃 및 기본 기능
  [피그마 사용]:https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
@@ -112,7 +112,7 @@
 
 
 
-[js]: https://cdn-icons-png.flaticon.com/128/5968/5968292.png
+[jsp]: https://cdn-icons-png.flaticon.com/128/29/29540.png
 [Java]: https://cdn-icons-png.flaticon.com/128/226/226777.png
 [Apache]: https://tomcat.apache.org/res/images/tomcat.png
 [MySQL]: https://cdn-icons-png.flaticon.com/128/919/919836.png
