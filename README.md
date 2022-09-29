@@ -93,8 +93,10 @@
  - Spring Framewrok 사용
  
  <br/>
+  
   ### 2. 추가 기능
   [부산 맛집정보 서비스]:https://www.data.go.kr/data/15063472/openapi.do
+  
   - 파일업로드(확장자 필터링)
   - 좋아요, 신고기능
   - 관리자 페이지 >> 사원 계정 정지
