@@ -36,8 +36,7 @@
 | 코드 병합 |  |  |  |  |  |  | :white_check_mark: | :white_check_mark: |  |
 | 발표 준비 |  |  |  |  |  |  | | :white_check_mark: |  |
 | 발표 |  |  |  |  |  |  |  |  |  :white_check_mark:  |
-<br/><br/>
-<br/><br/>
+
 
 
 
