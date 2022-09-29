@@ -1,4 +1,4 @@
-# :computer: Community Employees Page - Team P.P(Perceving People)
+# :computer: Community Employees Page - Team P.P
 
 ### 
 
