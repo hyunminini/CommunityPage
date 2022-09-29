@@ -8,6 +8,16 @@
 <link rel="stylesheet" href="css/layout.css">
 <title>BoardWrite.jsp</title>
 
+<style>
+.back-btn a{
+	color: #000;
+	padding: 0.3em 3em 0.3em 3em;
+	background: #f0f0f0;
+	border: 1px solid #ccc;
+	text-decoration: none;
+}
+</style>
+
 <script language=javascript>
 function checkValid() {
     var f = window.document.writeForm;
@@ -41,7 +51,7 @@ function checkValid() {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">
+			<a class="navbar-brand" href="board.do?command=backDrop">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>
@@ -88,7 +98,7 @@ function checkValid() {
 	<table align="center" cellpadding="5" cellspacing="2" width="100%" border="1">
       	<div class="board-text-flex">
       		<h3 class="board-name">게시글 작성</h3>
-      		<p><a href="javascript:history.back();">뒤로가기 아이콘</a></p>
+      		<p class="back-btn"><a href="javascript:history.back();">뒤로가기</a></p>
       	</div>
     	<tr>
        	 	<td class="left-td">
@@ -126,10 +136,7 @@ function checkValid() {
 	<div class="btn-wrap">
 		<input class="submit" type="submit" value="게시글 작성"> 
 	</div>
-	
-	
 </form>
-
 </div>
 
 <footer>

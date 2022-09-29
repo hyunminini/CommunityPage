@@ -59,7 +59,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">
+			<a class="navbar-brand" href="board.do?command=backDrop">
 				PP 게시판 웹 사이트
 			</a>			
 		</div>

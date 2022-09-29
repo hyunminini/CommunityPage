@@ -124,7 +124,6 @@ public class BoardController extends HttpServlet {
 			response.sendRedirect("boardWrite.jsp?empno="+empno);
 			return;//write() 메소드 종료
 		}
-		
 		// BoardWrite.jsp의 form에서 넘어온 데이터들로 BoardDTO객체를 생성해
 		// DAO에 넘겨준다!
 		try {
