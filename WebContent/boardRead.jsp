@@ -70,6 +70,18 @@ footer {
 		width: 50%;
 		margin-left: 0.5em;
 	}
+	
+	.mainImg {
+	width: 100%;
+	height: auto;
+	filter: brightness(95%);
+	}
+	
+	.mainImg img{
+	width: 100%;
+	height: auto;
+	}
+
 	.btn-wrap {
 		text-align: right;
 	}
@@ -328,7 +340,7 @@ footer {
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					사번  ${empno}
+					${sessionScope.ename} 님
 	
 					<span class="caret"></span>
 					</a>
@@ -339,7 +351,7 @@ footer {
 					<c:choose>
 						<c:when test="${sessionScope.empno == 1001}">
 							<li class="active"> 
-								<a href="logoutAction.jsp">관리자 페이지 이동</a>
+								<a href="adminPage.jsp">관리자 페이지 이동</a>
 							</li>
 							<li> 
 								<a href="logoutAction.jsp">로그아웃</a>
@@ -358,7 +370,9 @@ footer {
 	</div>
 </nav>
 	<!-- 메인 이미지 -->
-<div class="mainImg"></div>
+<div class="mainImg">
+	<img src="images/team.jpg">
+</div>
 
 <div class="board-wrap">
 	<div class="max-wrap">

@@ -256,4 +256,30 @@ public class BoardDAO {
 			}
 			return 0;
 		}
+		
+		// 조회순 랭킹
+	      // 조회수 랭킹 순 
+        public static ArrayList<BoardDTO> countAllContents() throws SQLException{
+           Connection con = null;   
+           PreparedStatement pstmt = null;
+           ResultSet rset = null;
+           ArrayList<BoardDTO> alist = null;
+           String query="select BOARD_CNUM, B.CATEGORY, B.TITLE, E.EMPNO, E.ENAME, B.WRITE_DATE, B.READNUM from BOARD B, EMP E WHERE E.EMPNO = B.EMPNO ORDER BY READNUM DESC LIMIT 3;";
+           try {
+              con = DBUtil.getConnection();
+              pstmt = con.prepareStatement(query);
+              rset = pstmt.executeQuery();
+              alist = new ArrayList<BoardDTO>();
+              while(rset.next()){
+                 alist.add(new BoardDTO(rset.getInt(1),rset.getString(2),
+                       rset.getString(3),rset.getInt(4), rset.getString(5),rset.getString(6)
+                        ,rset.getInt(7)));
+              }
+              
+           }finally{
+              DBUtil.close(rset, pstmt, con);
+           }
+           return alist;
+        }
+
 }

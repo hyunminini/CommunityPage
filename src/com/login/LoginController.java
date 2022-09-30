@@ -20,43 +20,48 @@ import emp.EmpDTO;
  */
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
    public LoginController() {
         super();
     }
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String pw = null;
-		Integer empno = null;
-    	EmpDTO emp = null;
-    	System.out.println(request.getParameter("empno"));
-    	
+   protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+      String pw = null;
+      Integer empno = null;
+      String ename = null;
+       EmpDTO emp = null;
+       System.out.println(request.getParameter("empno"));
+       
 
-    	request.setAttribute("empno", empno);
-    	request.setAttribute("pw", pw);
-    	
-		try {
-			pw = request.getParameter("pw");
-			empno = Integer.parseInt(request.getParameter("empno"));
-			emp = EmpDAO.loginTest(empno, pw);
-			
-			System.out.println("login emp : " + emp);
-			
-			
-			if (emp !=null) {
-				HttpSession session = request.getSession();
-				System.out.println("session emp : " + emp.getEmpno());
-				session.setAttribute("empno", emp.getEmpno());
-				request.getRequestDispatcher("emp.do").forward(request, response);
-			}else {
-				response.sendRedirect("login.jsp");
-				return;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+       request.setAttribute("empno", empno);
+       request.setAttribute("ename", ename);
+       request.setAttribute("pw", pw);
+       
+      try {
+         pw = request.getParameter("pw");
+         empno = Integer.parseInt(request.getParameter("empno"));
+         ename = request.getParameter("ename");
+         emp = EmpDAO.loginTest(empno, pw);
+         
+         System.out.println("login emp : " + emp);
+         
+         
+         if (emp !=null) {
+            HttpSession session = request.getSession();
+            System.out.println("session emp : " + emp.getEmpno());
+            System.out.println("session ename = " + emp.getEname());
+            session.setAttribute("empno", emp.getEmpno());
+            session.setAttribute("ename", emp.getEname());
+            request.getRequestDispatcher("emp.do").forward(request, response);
+         }else {
+            response.sendRedirect("login.jsp");
+            return;
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+   }
 
 }

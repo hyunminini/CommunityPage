@@ -11,7 +11,17 @@
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/board-list.css">
 <title>Main.jsp</title>
-
+<style>
+.mainImg {
+	width: 100%;
+	height: auto;
+	filter: brightness(95%);
+}
+.mainImg img{
+	width: 100%;
+	height: auto;
+}
+</style>
 
 </head>
 <body>
@@ -83,7 +93,9 @@
 </nav>
 	
 	<!-- 메인 이미지 -->
-<div class="mainImg"></div>
+<div class="mainImg">
+	<img src="images/team.jpg">
+</div>
 
 
 

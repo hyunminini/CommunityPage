@@ -28,8 +28,6 @@ public class BoardController extends HttpServlet {
 		System.out.println("command " + command);
 		System.out.println("체크합니다");
 		
-		
-		
 		if(command == null){
 			command = "main";
 		}
@@ -52,6 +50,8 @@ public class BoardController extends HttpServlet {
 			update(request, response);
 		}else if(command.equals("comment")) {
 			comment(request, response);
+		}else if(command.equals("countList")) {
+			countList(request, response);
 		}
 	}
 	
@@ -223,8 +223,6 @@ public class BoardController extends HttpServlet {
 
 		empno = Integer.parseInt(String.valueOf(session.getAttribute("empno")));
 		
-		
-		
 		request.setAttribute("empno", empno);
 		String pw = request.getParameter("pw");
 		request.setAttribute("pw", pw);
@@ -338,7 +336,7 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("error", "게시글 수정 실패");
 		}
 		if(result){
-			response.sendRedirect("board.do?command=read&board_cnum=" +strNum);
+			response.sendRedirect("board.do?command=read&board_cnum=" +strNum+"&empno="+empno);
 			return; // update() 메소드 종료
 		}
 		request.setAttribute("error", "게시글 수정 실패");
@@ -370,8 +368,23 @@ public class BoardController extends HttpServlet {
 		}
 		request.getRequestDispatcher(url).forward(request, response);
 	}
-
 	
-	
+	private void countList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "error.jsp";
+        int empno = Integer.parseInt(request.getParameter("empno"));
+        request.setAttribute("empno", empno);
+        String ename = request.getParameter("ename");
+        System.out.println("ename:"+ename);
+        
+        try {
+           // DAO에서 반환되어온 전체 데이터를 request 객체에 담아
+           request.setAttribute("countList", BoardDAO.countAllContents());
+           url = "lankPage.jsp";
+        } catch (SQLException e) {
+           e.printStackTrace();
+           request.setAttribute("error", "모두 보기 실패 재 실행 해 주세요");
+        }   
+        request.getRequestDispatcher(url).forward(request, response);
+     }
 
 }

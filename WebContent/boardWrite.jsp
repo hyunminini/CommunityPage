@@ -9,6 +9,17 @@
 <title>BoardWrite.jsp</title>
 
 <style>
+
+.mainImg {
+	width: 100%;
+	height: auto;
+	filter: brightness(95%);
+}
+.mainImg img{
+	width: 100%;
+	height: auto;
+}
+
 .back-btn a{
 	color: #000;
 	padding: 0.3em 3em 0.3em 3em;
@@ -91,7 +102,7 @@ function checkValid() {
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					사번  ${empno}
+					${sessionScope.ename} 님
 	
 					<span class="caret"></span>
 					</a>
@@ -100,6 +111,7 @@ function checkValid() {
 					<li class="active"> 
 						<a href="logoutAction.jsp">로그아웃</a>
 					</li>
+					
 				</ul>
 			</li>
 		</ul>
@@ -108,7 +120,9 @@ function checkValid() {
 </nav>
 	
 	<!-- 메인 이미지 -->
-<div class="mainImg"></div>
+<div class="mainImg">
+	<img src="images/team.jpg">
+</div>
 
 <div class="form-wrap">
 <form name="writeForm" method="post" action="board.do" onSubmit='checkValid()'>

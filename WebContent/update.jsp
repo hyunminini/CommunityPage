@@ -12,6 +12,17 @@
 <link rel="stylesheet" href="css/layout.css">
 <title>update.jsp</title>
 <style>
+
+.mainImg {
+	width: 100%;
+	height: auto;
+	filter: brightness(95%);
+}
+.mainImg img{
+	width: 100%;
+	height: auto;
+}
+
 .max-wrap{
 	max-width:1000px;
 	margin: 0 auto;
@@ -69,7 +80,7 @@ textarea {
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-					사번  ${empno}
+					${sessionScope.ename} 님
 	
 					<span class="caret"></span>
 					</a>
@@ -79,7 +90,7 @@ textarea {
 					<c:choose>
 						<c:when test="${sessionScope.empno == 1001}">
 							<li class="active"> 
-								<a href="logoutAction.jsp">관리자 페이지 이동</a>
+								<a href="adminPage.jsp">관리자 페이지 이동</a>
 							</li>
 							<li> 
 								<a href="logoutAction.jsp">로그아웃</a>
@@ -99,12 +110,17 @@ textarea {
 </nav>
 	
 	<!-- 메인 이미지 -->
-<div class="mainImg"></div>
+<div class="mainImg">
+	<img src="images/team.jpg">
+</div>
 
 <div class="form-wrap">
 
 	<%
 		String board_cnum = (String) request.getParameter("board_cnum");
+	%>
+		<%
+		String empno = (String) request.getParameter("empno");
 	%>
 
 <form name=updateForm method=post action="board.do?command=update&board_cnum=<%=board_cnum %>" onSubmit='checkValid()'>

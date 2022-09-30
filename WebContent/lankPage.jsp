@@ -162,7 +162,7 @@ footer {
 					<c:choose>
 						<c:when test="${sessionScope.empno == 1001}">
 							<li class="active"> 
-								<a href="adminPage.jsp">관리자 페이지 이동</a>
+								<a href="logoutAction.jsp">관리자 페이지 이동</a>
 							</li>
 							<li> 
 								<a href="logoutAction.jsp">로그아웃</a>
@@ -190,8 +190,8 @@ footer {
 <div class="max-wrap">
 
 
-<h3 class="con-title">게시판 리스트 
-	<span><a href="board.do?command=countList&empno=${empno}">인기글 Top3 보기 ></a></span>
+<h3 class="con-title">인기글 Top 3
+	<span><a href="board.do">뒤로가기 ></a></span>
 </h3> 
 
 <table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
@@ -216,13 +216,7 @@ footer {
         </td>
     </tr>
     
- 	<c:if test="${empty Main || fn:length(Main) == 0}">
-		<tr>
-	        <td colspan="5">
-	            <p align="center"><b><span style="font-size:9pt;">등록된 방명록이 없습니다.</span></b></p>
-	        </td>
-	    </tr>
-	</c:if>
+	
 		<c:forEach items="${requestScope.admin_entity}" var="data">
 				   
 				    <tr class="board-list">
@@ -253,7 +247,7 @@ footer {
 				    
 			</c:forEach>
 	<%-- ArrayList에  BoardDTO 객체를 하나하나 data라는 반복 대입해서 사용 --%>
-	<c:forEach items="${requestScope.Main}" var="data">
+	<c:forEach items="${requestScope.countList}" var="data">
 		    <tr class="board-list">
 		        <td>
 		            <p>${data.board_cnum}</p>
@@ -283,18 +277,6 @@ footer {
  	
 
 </table>
-<div class="add-wrap">	
-	<form action="board.do" method="post">
-		<button class="add-btn" type="submit"><a href="board.do?command=write&empno=${empno}">글쓰기</a></button>
-		<input type="hidden" name="empno" value="${empno}"></input>
-	</form>
-</div>
-</div>
-
-<div id="pagination" style="width:100vw; text-align: center; margin-top: 10px;">
-<c:forEach begin="1" end="${lastpage}" varStatus="i">
-	<a href="board.do?vpage=${i.count}">${i.count}</a>
-</c:forEach>
 </div>
 
 <footer>
