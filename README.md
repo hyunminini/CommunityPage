@@ -82,7 +82,7 @@
  [DB 초기 설정]:https://github.com/hyunminini/CommunityPage/issues/41
  [잘못된 sendRedirect 주소로 데이터 무한 루프]:https://github.com/hyunminini/CommunityPage/issues/39
  [AWS my-sql 사용 시 대소문자 구분]:https://github.com/hyunminini/CommunityPage/issues/11
- [초기 구조에러로 게시글 수정 삭제시 필요 정보와 session에 포함된 정보 불일치]:https://github.com/hyunminini/CommunityPage/issues/40
+ [게시글 수정 삭제시 필요한 정보가 session 정보에 포함되어 있지 않음]:https://github.com/hyunminini/CommunityPage/issues/40
  
  + [DB 초기 설정]
  + [잘못된 sendRedirect 주소로 데이터 무한 루프] >> AWS 사용 시 주의!
