@@ -51,10 +51,12 @@
  [피그마 사용]:https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
 - 레이아웃 >> [피그마 사용]
 - 기능
-  - 사원 게시판 >> 카테고리별 등록
+  - 사원 게시판(CRUD) >> 카테고리별 등록
   - 댓글
   - 페이지네이션
   - 관리자페이지
+  - 로그인 필터 / 로그아웃 
+  - 공지사항
 
 - 데이터베이스 구조
 ![Image](https://user-images.githubusercontent.com/109777144/192930104-521b9b3d-f18f-40fd-ab72-9533f52e0f70.png)
