@@ -80,6 +80,7 @@
   + 초기 개발 시 우선 순위 파악 실패로 코드 구조가 깔끔하지 않음(session 및 MVC)
   + 변수 및 객체 등 기존에 통일한 사소한 변경이 소통되지 않아 코드 병합 시 혼동
   + git 사용 미숙
+  + 팀원간의 개발환경 불일치
  
  ### 2. 프로젝트 내부 오류
  [DB 초기 설정]:https://github.com/hyunminini/CommunityPage/issues/41
