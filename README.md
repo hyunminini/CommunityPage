@@ -50,16 +50,6 @@
 ### 2. 프로젝트 레이아웃 및 기본 기능
  [피그마 사용]:https://www.figma.com/file/NSYJHmggBXPuJKYLswrBOM/Java-MiniProject?node-id=0%3A1
 - 레이아웃 >> [피그마 사용]
-- 기능
-  - 사원 게시판(CRUD) >> 카테고리별 등록
-  - 댓글
-  - 공지사항
-  - 인기글(조회수 Top 3)
-  - 페이지네이션
-  - 관리자 - 모든 글 수정, 삭제 가능
-  - 관리자페이지 
-  - 로그인 필터 / 로그아웃 
-
   
 - 데이터베이스 구조
 
@@ -71,6 +61,17 @@
 ![Image](https://user-images.githubusercontent.com/109777144/192931428-b87f40e7-5f49-4913-93e3-98ff7e3e6785.png)
 ![Image](https://user-images.githubusercontent.com/109777144/192931466-3ccee591-3028-4ba3-aced-a3fcba8e0ef7.png)
 ![Image](https://user-images.githubusercontent.com/109777144/192942340-3045a025-93c3-4398-a667-98d1dcbe0ac7.png)
+
+- 기능
+  - 사원 게시판(CRUD) >> 카테고리별 등록
+  - 댓글
+  - 공지사항
+  - 인기글(조회수 Top 3)
+  - 페이지네이션
+  - 관리자 - 모든 글 수정, 삭제 가능
+  - 관리자페이지 
+  - 로그인 필터 / 로그아웃 
+
 
 <br/><br/>
 
